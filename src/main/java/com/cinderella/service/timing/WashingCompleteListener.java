@@ -1,4 +1,4 @@
-package test;
+package com.cinderella.service.timing;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -14,7 +14,7 @@ public class WashingCompleteListener implements MessageListener {
 			String userId = msg.getStringProperty("userId");
 			String machineId = msg.getStringProperty("machineId");
 			Long time = msg.getLongProperty("time");
-			System.out.println(String.format("%s - %s - %s", userId, machineId, time));
+			System.out.println(String.format("%s - %s - %s - %s", userId, machineId, time, this));
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
