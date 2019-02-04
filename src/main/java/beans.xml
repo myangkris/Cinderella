@@ -15,34 +15,34 @@
     	<property name="brokerURL" value="tcp://localhost:61616"/>  
     	<property name="userName" value="cinderella"/>
       	<property name="password" value="cinderella"/>
-	</bean> 
+    </bean> 
 	
-	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">  
-    	<property name="connectionFactory" ref="targetConnectionFactory"/>  
-    	<property name="maxConnections" value="10"/>  
-	</bean>
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">  
+        <property name="connectionFactory" ref="targetConnectionFactory"/>  
+        <property name="maxConnections" value="10"/>  
+    </bean>
     
     <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">  
-    	<property name="targetConnectionFactory" ref="pooledConnectionFactory"/>  
-	</bean>
+        <property name="targetConnectionFactory" ref="pooledConnectionFactory"/>  
+    </bean>
 
-	<bean id="washingQueue" class="org.apache.activemq.command.ActiveMQQueue">  
-    	<constructor-arg>  
-        	<value>WashingQueue</value>  
-    	</constructor-arg>
+    <bean id="washingQueue" class="org.apache.activemq.command.ActiveMQQueue">  
+        <constructor-arg>  
+            <value>WashingQueue</value>  
+        </constructor-arg>
     </bean>
     
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="defaultDestination"><ref bean="washingQueue"/></property>
-	</bean>
-	<bean id="producer" class="com.cinderella.service.timing.Producer" lazy-init="false"></bean>
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="defaultDestination"><ref bean="washingQueue"/></property>
+    </bean>
+    <bean id="producer" class="com.cinderella.service.timing.Producer" lazy-init="false"></bean>
     
     <bean id="washingCompleteListener" class="com.cinderella.service.timing.WashingCompleteListener"/>
     
     <bean id="washingCompleteListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
-    	<property name="connectionFactory" ref="connectionFactory" />  
-    	<property name="destination" ref="washingQueue" />  
-    	<property name="messageListener" ref="washingCompleteListener" />  
-	</bean>
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <property name="destination" ref="washingQueue" />  
+        <property name="messageListener" ref="washingCompleteListener" />  
+    </bean>
 </beans>
