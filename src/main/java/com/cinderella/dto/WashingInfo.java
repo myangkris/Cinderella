@@ -1,6 +1,7 @@
 package com.cinderella.dto;
 
 public class WashingInfo {
+    // TODO may need to use lombok
     private String userId;
     private String machineId;
     private long washingDuration;

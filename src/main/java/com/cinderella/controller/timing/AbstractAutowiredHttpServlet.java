@@ -39,7 +39,8 @@ public abstract class AbstractAutowiredHttpServlet extends HttpServlet {
             response.setContentType(contentType);
             response.getWriter().write(text);
         } catch (IOException e) {
-            
+            // TODO Config Log4J and handle the log of exceptions
+            e.printStackTrace();
         }
     }
 }
