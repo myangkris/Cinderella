@@ -53,4 +53,10 @@ public class WashingServlet extends AbstractAutowiredHttpServlet {
         washingService.process(washingInfo);
     }
 
+    // TODO remove this method in master
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doPost(req, resp);
+    }
 }
