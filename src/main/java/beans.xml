@@ -8,8 +8,8 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-5.1.xsd">
     
-    <context:component-scan base-package="com.cinderella" />
     <context:annotation-config />
+    <context:component-scan base-package="com.cinderella" />
     
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">  
     	<property name="brokerURL" value="tcp://localhost:61616"/>  
@@ -36,9 +36,9 @@
         <property name="connectionFactory" ref="connectionFactory" />
         <property name="defaultDestination"><ref bean="washingQueue"/></property>
     </bean>
-    <bean id="producer" class="com.cinderella.service.timing.Producer" lazy-init="false"></bean>
+    <bean id="washingMessageProducer" class="com.cinderella.dao.timing.WashingMessageProducerImpl" lazy-init="false"></bean>
     
-    <bean id="washingCompleteListener" class="com.cinderella.service.timing.WashingCompleteListener"/>
+    <bean id="washingCompleteListener" class="com.cinderella.dao.timing.WashingCompleteListener"/>
     
     <bean id="washingCompleteListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
         <property name="connectionFactory" ref="connectionFactory" />  

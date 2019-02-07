@@ -1,4 +1,4 @@
-package com.cinderella.service.timing;
+package com.cinderella.dao.timing;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;

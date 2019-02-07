@@ -1,4 +1,4 @@
-package com.cinderella.service.timing;
+package com.cinderella.dao.timing;
 
 import org.apache.activemq.ScheduledMessage;
 import org.apache.xbean.spring.context.ClassPathXmlApplicationContext;
@@ -7,27 +7,30 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
+import com.cinderella.dto.WashingInfo;
+
 import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.jms.*;
 
 
-public class Producer {
+public class WashingMessageProducerImpl implements WashingMessageProducer {
     @Resource
     private JmsTemplate jmsTemplate;
 
-    public void produce() {
+    @Override
+    public void produce(WashingInfo washingInfo) {
         Destination destination = jmsTemplate.getDefaultDestination();
 		for (int i = 0; i < 3; i++) {
 		    jmsTemplate.send(destination, new MessageCreator() {
 		        public Message createMessage(Session session) throws JMSException {
 		          MapMessage msg = session.createMapMessage();
 		          int num = new Random().nextInt(1000);
-		          msg.setStringProperty("machineId", "Machine_ID-" + num);
+		          msg.setStringProperty("machineId", washingInfo.getMachineId() + "-" + num);
 		          msg.setLongProperty("time", System.currentTimeMillis());
-		          msg.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, 20000L);
-		          msg.setStringProperty("userId", "User_" + num);
+		          msg.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, washingInfo.getWashingDuration());
+		          msg.setStringProperty("userId", washingInfo.getUserId() + "_" + num);
 		          
 		          System.out.println(String.format("%s - %s - %s", 
 		                  msg.getStringProperty("userId"), 
@@ -50,8 +53,8 @@ public class Producer {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"beans.xml"});  
         BeanFactory factory = (BeanFactory) context;  
-        Producer producer = (Producer) factory.getBean("producer"); 
-        producer.produce();
+        WashingMessageProducerImpl producer = (WashingMessageProducerImpl) factory.getBean("producer"); 
+        //producer.produce();
         System.out.println("produced");
 	}
 }
