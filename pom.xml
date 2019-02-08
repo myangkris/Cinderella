@@ -11,7 +11,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
-          <release>10</release>
+          <target>1.8</target>
+          <resource>1.8</resource>
         </configuration>
       </plugin>
       <plugin>
@@ -26,12 +27,18 @@
   
   <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.source.version>1.10</java.source.version>
-        <java.target.version>1.10</java.target.version>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>1.8</java.target.version>
         <springframework>5.1.4.RELEASE</springframework>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>9.0.13</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
