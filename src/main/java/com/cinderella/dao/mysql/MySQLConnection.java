@@ -5,16 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import com.cinderella.dao.DBConnection;
 import com.cinderella.entity.Manager;
 import com.cinderella.entity.Site;
 import com.cinderella.entity.User;
+import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.WashMachine;
-import com.cinderella.dao.mysql.MySQLDBUtil;
 
 
 public class MySQLConnection implements DBConnection {
@@ -47,7 +44,7 @@ public class MySQLConnection implements DBConnection {
 			return false;
 		}
 		try {
-			String sql = "SELECT user_id FROM users WHERE user_id = ? AND password = ?";
+			String sql = "SELECT UserId FROM user WHERE UserId = ? AND password = ?";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, userId);
 			statement.setString(2, password);
@@ -72,10 +69,35 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public User findUserByUsername(String username) {
+		if (conn != null) {
+			String sql = "SELECT * FROM user WHERE username = ?";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, username);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					UserBuilder builder = new UserBuilder();
+					builder.setUserId(rs.getInt("UserId"));
+					builder.setUserName(rs.getString("username"));
+					builder.setUserPassword(rs.getString("password"));
+					builder.setUserBalance(rs.getInt("balance"));
+					builder.setUserPhoneNumber(rs.getInt("phoneNumber"));
+					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
+					builder.setUserEmail(rs.getString("email"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return null;
-		
 	}
-	
+	/*
+	sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance INT(9),"
+						+ "phoneNumber INT(11)," + "bonusPoints INT(9)," + "email VARCHAR(255),"
+						+ "PRIMARY KEY (UserId)" + ")";
+	*/
 	/**
 	 * Return User object by query the db using userid
 	 *
@@ -85,8 +107,29 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public User findUserByUserId(int userid) {
+		if (conn != null) {
+			String sql = "SELECT * FROM user WHERE UserId = ?";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, userid);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					UserBuilder builder = new UserBuilder();
+					builder.setUserId(rs.getInt("UserId"));
+					builder.setUserName(rs.getString("username"));
+					builder.setUserPassword(rs.getString("password"));
+					builder.setUserBalance(rs.getInt("balance"));
+					builder.setUserPhoneNumber(rs.getInt("phoneNumber"));
+					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
+					builder.setUserEmail(rs.getString("email"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return null;
-		
 	}
 	
 	/**
