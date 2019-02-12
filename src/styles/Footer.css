@@ -6,7 +6,7 @@
 .footer-top{
     background-color: var(--darkBlue);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
 .footer-connect{
@@ -31,5 +31,8 @@
     justify-content: flex-end;
 }
 
+.icon-group svg{
+    margin-left: 0.2rem;
+}
 
 

@@ -3,6 +3,7 @@
 @import "styles/HowItWorks$AboutBanner.css";
 @import "./styles/HowItWorks.css";
 @import "./styles/Footer.css";
+@import "./styles/Header.css";
 
 body {
   margin: 0;
