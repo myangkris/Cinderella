@@ -4,6 +4,7 @@
 @import "./styles/HowItWorks.css";
 @import "./styles/Footer.css";
 @import "./styles/Header.css";
+@import './styles/MachineStatus.css';
 
 body {
   margin: 0;
