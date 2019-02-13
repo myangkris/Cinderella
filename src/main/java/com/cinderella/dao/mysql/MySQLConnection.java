@@ -12,6 +12,7 @@ import com.cinderella.entity.Site;
 import com.cinderella.entity.User;
 import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.WashMachine;
+import com.cinderella.entity.WashMachine.WashMachineBuilder;;
 
 
 public class MySQLConnection implements DBConnection {
@@ -167,6 +168,30 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public WashMachine findWashMachineById(long machineId) {
+		if (conn != null) {
+			String sql = "SELECT * FROM washmachine WHERE MachineId = ?";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setLong(1, machineId);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					WashMachineBuilder builder = new WashMachineBuilder();
+					builder.setId(rs.getLong("MachineId"));
+					builder.setStatus(rs.getInt("status"));
+					builder.setPricePerService(rs.getFloat("pricePerService"));
+					builder.setUsedBy(rs.getInt("UsedBy"));
+					builder.setLocation(rs.getString("locatedAt"));
+					builder.setWaitedBy(rs.getInt("WaitedBy"));
+					builder.setStartsAt(rs.getString("startsAt"));
+					builder.setWaitingCapacity(rs.getInt("waitingCapacity"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Not connected to MySQL");
+				e.printStackTrace();
+			}
+		}
 		return null;
 		
 	}
