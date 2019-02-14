@@ -281,7 +281,15 @@ public class MySQLConnection implements DBConnection {
 		String sql = "DELETE FROM user WHERE UserId = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, userid);
-		stmt.executeUpdate();
+		if (stmt.executeUpdate() == 0) {
+			sql = "SELECT UserId FROM user WHERE UserId = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, userid);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				throw new SQLException("Delete Failure.");
+			}
+		}
 	}
 
 	/**
