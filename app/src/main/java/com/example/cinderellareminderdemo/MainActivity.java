@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         JPushInterface.setDebugMode(true);
         JPushInterface.init(getApplicationContext());
-        System.out.println(JPushInterface.getRegistrationID(getApplicationContext()));
+        System.out.println("Register ID: " + JPushInterface.getRegistrationID(getApplicationContext()));
     }
 
     @Override
