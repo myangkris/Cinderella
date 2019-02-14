@@ -148,6 +148,17 @@ public interface DBConnection {
 	 * @throws Exception if delete failed.
 	 */
 	public void deleteManagerById(int employeeAccountId, boolean onCascade) throws Exception;
+	
+	
+	/**
+	 * Get all the washing machines of the address.
+	 * Go through the washmachine table and get all the rows WHERE locatedAt = address
+	 * 
+	 * @param address
+	 * @return List<WashMachine>
+	 * @throws Exception
+	 */
+	public List<WashMachine> getWashMachineList(String address) throws Exception;
 }
 
 

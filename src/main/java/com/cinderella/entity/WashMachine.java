@@ -1,14 +1,28 @@
 package com.cinderella.entity;
 
+import java.sql.Timestamp;
+
 public class WashMachine {
+	// MySQL DB Schema
+	/*  #   Column              Type            Null
+		1	MachineIDPrimary	int(13)			No
+		2	status	            int(255)		No
+		3	pricePerService	    float(4,2)		Yes
+		4	UsedByIndex	        int(7)			Yes
+		5	locatedAtIndex	    varchar(255)	Yes
+		6	WaitedByIndex	    int(7)			Yes
+		7	startsAt	        timestamp		No
+		8	waitingCapacity	    int(2)			Yes
+	*/
+
 	// Fields------------------------------------------------
 	private long id;
 	private int status;
 	private float pricePerService;
-	private int usedBy;
+	private Integer usedBy;
 	private String location;
-	private int waitedBy;
-	private String startsAt;
+	private Integer waitedBy;
+	private Timestamp startsAt;
 	private int waitingCapacity;
 	
 	// Constructor------------------------------------------------
@@ -35,7 +49,7 @@ public class WashMachine {
 		return pricePerService;
 	}
 	
-	public int getUsedBy() {
+	public Integer getUsedBy() {
 		return usedBy;
 	}
 	
@@ -43,11 +57,11 @@ public class WashMachine {
 		return location;
 	}
 	
-	public int getWaitedBy() {
+	public Integer getWaitedBy() {
 		return waitedBy;
 	}
 	
-	public String getStartsAt() {
+	public Timestamp getStartsAt() {
 		return startsAt;
 	}
 	
@@ -71,7 +85,7 @@ public class WashMachine {
 		return this;
 	}
 
-	public WashMachine setUsedBy(int usedBy) {
+	public WashMachine setUsedBy(Integer usedBy) {
 		this.usedBy = usedBy;
 		return this;
 	}
@@ -81,12 +95,12 @@ public class WashMachine {
 		return this;
 	}
 
-	public WashMachine setWaitedBy(int waitedBy) {
+	public WashMachine setWaitedBy(Integer waitedBy) {
 		this.waitedBy = waitedBy;
 		return this;
 	}
 
-	public WashMachine setStartsAt(String startsAt) {
+	public WashMachine setStartsAt(Timestamp startsAt) {
 		this.startsAt = startsAt;
 		return this;
 	}
@@ -102,10 +116,10 @@ public class WashMachine {
 		private long id;
 		private int status;
 		private float pricePerService;
-		private int usedBy;
+		private Integer usedBy;
 		private String location;
-		private int waitedBy;
-		private String startsAt;
+		private Integer waitedBy;
+		private Timestamp startsAt;
 		private int waitingCapacity;
 		
 		public WashMachine build() {
@@ -125,7 +139,7 @@ public class WashMachine {
 			this.pricePerService = pricePerService;
 			return this;
 		}
-		public WashMachineBuilder setUsedBy(int usedBy) {
+		public WashMachineBuilder setUsedBy(Integer usedBy) {
 			this.usedBy = usedBy;
 			return this;
 		}
@@ -133,11 +147,11 @@ public class WashMachine {
 			this.location = location;
 			return this;
 		}
-		public WashMachineBuilder setWaitedBy(int waitedBy) {
+		public WashMachineBuilder setWaitedBy(Integer waitedBy) {
 			this.waitedBy = waitedBy;
 			return this;
 		}
-		public WashMachineBuilder setStartsAt(String startsAt) {
+		public WashMachineBuilder setStartsAt(Timestamp startsAt) {
 			this.startsAt = startsAt;
 			return this;
 		}
