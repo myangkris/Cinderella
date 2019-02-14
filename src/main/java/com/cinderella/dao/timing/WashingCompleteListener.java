@@ -5,8 +5,14 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
-public class WashingCompleteListener implements MessageListener {
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cinderella.service.remiding.WashCompleteRemindingService;
+
+public class WashingCompleteListener implements MessageListener {
+    @Autowired
+    private WashCompleteRemindingService washCompleteRemindingService;
+    
 	@Override
 	public void onMessage(Message message) {
 		try {
@@ -15,6 +21,7 @@ public class WashingCompleteListener implements MessageListener {
 			String machineId = msg.getStringProperty("machineId");
 			Long time = msg.getLongProperty("time");
 			System.out.println(String.format("%s - %s - %s - %s", userId, machineId, time, this));
+			washCompleteRemindingService.pushReminder(userId);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
