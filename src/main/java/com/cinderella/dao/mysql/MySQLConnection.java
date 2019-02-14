@@ -93,11 +93,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return null;
 	}
-	/*
-	sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance INT(9),"
-						+ "phoneNumber INT(11)," + "bonusPoints INT(9)," + "email VARCHAR(255),"
-						+ "PRIMARY KEY (UserId)" + ")";
-	*/
+	
 	/**
 	 * Return User object by query the db using userid
 	 *
@@ -180,8 +176,57 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public boolean updateUser(User user) {
-
+		if (conn == null) {
+			return false;
+		}
+		try {
+			String sql = "INSERT IGNORE INTO user("
+					+ "UserId, "
+					+ "username, "
+					+ "password, "
+					+ "balance, "
+					+ "phoneNumber, "
+					+ "bonusPoints, "
+					+ "email"
+					+ ") VALUES(?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, user.getId());
+			stmt.setString(2, user.getName());
+			stmt.setString(3, user.getPassword());
+			stmt.setInt(4, user.getBalance());
+			stmt.setInt(5, user.getPhoneNumber());
+			stmt.setInt(6, user.getBonusPoints());
+			stmt.setString(7, user.getEmail());
+			if (stmt.executeUpdate() == 1) {
+				return true;
+			}
+			sql = "UPDATE user SET "
+					+ "username = ?, "
+					+ "password = ?, "
+					+ "balance = ?, "
+					+ "phoneNumber = ?, "
+					+ "bonusPoints = ?, "
+					+ "email = ?"
+					+ "WHERE UserId = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user.getName());
+			stmt.setString(2, user.getPassword());
+			stmt.setInt(3, user.getBalance());
+			stmt.setInt(4, user.getPhoneNumber());
+			stmt.setInt(5, user.getBonusPoints());
+			stmt.setString(6, user.getEmail());
+			stmt.setInt(7, user.getId());
+			return stmt.executeUpdate() == 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	/*
+	sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance INT(9),"
+						+ "phoneNumber INT(11)," + "bonusPoints INT(9)," + "email VARCHAR(255),"
+						+ "PRIMARY KEY (UserId)" + ")";
+	*/
 
 	/**
 	 * Return success or not by connecting the db to update the washMachine
@@ -230,7 +275,13 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public void deleteUserById(int userid, boolean onCascade) throws Exception {
-
+		if (conn == null) {
+			throw new SQLException("No DB connection, Delete Failure.");
+		}
+		String sql = "DELETE FROM user WHERE UserId = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, userid);
+		stmt.executeUpdate();
 	}
 
 	/**
