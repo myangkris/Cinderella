@@ -20,7 +20,7 @@ public class WashingMessageProducerImpl implements WashingMessageProducer {
     private JmsTemplate jmsTemplate;
 
     @Override
-    public void produce(WashingInfo washingInfo) {
+    public void produce(final WashingInfo washingInfo) {
         Destination destination = jmsTemplate.getDefaultDestination();
 		for (int i = 0; i < 3; i++) {
 		    jmsTemplate.send(destination, new MessageCreator() {
