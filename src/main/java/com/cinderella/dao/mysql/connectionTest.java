@@ -1,9 +1,5 @@
 package com.cinderella.dao.mysql;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-
 import com.cinderella.dao.DBConnection;
 import com.cinderella.dao.DBConnectionFactory;
 import com.cinderella.entity.Site;

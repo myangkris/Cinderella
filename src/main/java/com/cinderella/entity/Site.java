@@ -1,7 +1,7 @@
 package com.cinderella.entity;
 
 public class Site {
-	private String address;
+	private final String address;
 	private int operatingHours;
 	
 	private Site(SiteBuilder sb) {
@@ -27,12 +27,7 @@ public class Site {
 			return this;
 		}
 	}
-	
-	public Site setAddress(String newAddress) {
-		this.address = newAddress;
-		return this;
-	}
-	
+		
 	public String getAddress() {
 		return this.address;
 	}

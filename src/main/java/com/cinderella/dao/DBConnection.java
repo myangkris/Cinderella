@@ -1,8 +1,5 @@
 package com.cinderella.dao;
 
-import java.util.List;
-import java.util.Set;
-
 import com.cinderella.entity.Manager;
 import com.cinderella.entity.Site;
 import com.cinderella.entity.User;
@@ -70,14 +67,51 @@ public interface DBConnection {
 	public WashMachine findWashMachineById(long machineId);
 
 	/**
+	 * Return success or not by connecting the db to add or modify the user
+	 *
+	 *
+	 * @param user
+	 * @Return boolean, success or not
+	 */
+	public boolean addOrUpdateUser(User user);
+	
+	/**
+	 * Return success or not by connecting the db to add the user
+	 *
+	 *
+	 * @param user
+	 * @Return boolean, success or not
+	 */
+	public boolean addUser(User user);
+	
+	/**
 	 * Return success or not by connecting the db to update the user
 	 *
 	 *
 	 * @param user
 	 * @Return boolean, success or not
 	 */
-	public boolean AddOrUpdateUser(User user);
+	public boolean updateUser(User user);
 
+	/**
+	 * Return success or not by connecting the db to add or modify the washMachine
+	 *
+	 *
+	 * @param washMachine
+	 * @Return boolean, success or not
+	 */
+	public boolean addOrUpdateWashMachine(WashMachine washMachine);
+	
+	/**
+	 * Return success or not by connecting the db to add the washMachine
+	 *
+	 *
+	 * @param washMachine
+	 * @Return boolean, success or not
+	 */
+	public boolean addWashMachine(WashMachine washMachine);
+	
+	
 	/**
 	 * Return success or not by connecting the db to update the washMachine
 	 *
@@ -85,25 +119,25 @@ public interface DBConnection {
 	 * @param washMachine
 	 * @Return boolean, success or not
 	 */
-	public boolean AddOrUpdateWashMachine(WashMachine washMachine);
+	public boolean updateWashMachine(WashMachine washMachine);
 
 	/**
-	 * Return success or not by connecting the db to update the site
+	 * Return success or not by connecting the db to add or modify the site
 	 *
 	 *
 	 * @param site
 	 * @Return boolean, success or not
 	 */
-	public boolean AddOrUpdateSite(Site site);
+	public boolean addOrUpdateSite(Site site);
 
 	/**
-	 * Return success or not by connecting the db to update the manager
+	 * Return success or not by connecting the db to add or modify the manager
 	 *
 	 *
 	 * @param manager
 	 * @Return boolean, success or not
 	 */
-	public boolean AddOrUpdateManger(Manager manager);
+	public boolean addOrUpdateManger(Manager manager);
 
 	/**
 	 * delete a row of user by connecting the db to find it first and then delete it if exists.

@@ -2,7 +2,7 @@ package com.cinderella.entity;
 
 public class WashMachine {
 	// Fields------------------------------------------------
-	private long id;
+	private final long id;
 	private int status;
 	private float pricePerService;
 	private int usedBy;
@@ -55,12 +55,7 @@ public class WashMachine {
 		return waitingCapacity;
 	}
 	
-	// Setters------------------------------------------------
-	public WashMachine setId(long id) {
-		this.id = id;
-		return this;
-	}
-	
+	// Setters------------------------------------------------	
 	public WashMachine setStatus(int status) {
 		this.status = status;
 		return this;

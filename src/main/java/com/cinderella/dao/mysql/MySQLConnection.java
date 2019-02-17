@@ -230,7 +230,7 @@ public class MySQLConnection implements DBConnection {
 		return null;
 		
 	}
-
+		
 	/**
 	 * Return success or not by connecting the db to update the user
 	 *
@@ -239,8 +239,20 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean AddOrUpdateUser(User user) {
-		// TO DO
+	public boolean addOrUpdateUser(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean addUser(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateUser(User user) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -252,8 +264,20 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean AddOrUpdateWashMachine(WashMachine washMachine) {
-		// TO DO
+	public boolean addOrUpdateWashMachine(WashMachine washMachine) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean addWashMachine(WashMachine washMachine) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateWashMachine(WashMachine washMachine) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -265,7 +289,7 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean AddOrUpdateSite(Site site) {
+	public boolean addOrUpdateSite(Site site) {
 		if (site == null) {
 			return false;
 		}
@@ -318,7 +342,7 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean AddOrUpdateManger(Manager manager) {
+	public boolean addOrUpdateManger(Manager manager) {
 		if (manager == null) {
 			return false;
 		}

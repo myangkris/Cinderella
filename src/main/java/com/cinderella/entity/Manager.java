@@ -1,7 +1,7 @@
 package com.cinderella.entity;
 
 public class Manager {
-		private int employeeAccountNumber;
+		private final int employeeAccountNumber;
 		private String password;
 		private int accessPreviledge;
 		
@@ -35,12 +35,7 @@ public class Manager {
 				return this;
 			}
 		}
-		
-		public Manager setEmployeeAccountNumber(int employeeAccountNumber) {
-			this.employeeAccountNumber = employeeAccountNumber;
-			return this;
-		}
-		
+				
 		public int getEmployeeAccountNumber() {
 			return this.employeeAccountNumber;
 		}
