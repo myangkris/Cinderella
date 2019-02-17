@@ -14,6 +14,7 @@ import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.WashMachine;
 
 
+
 public class MySQLConnection implements DBConnection {
 	private Connection conn;
 
@@ -39,14 +40,14 @@ public class MySQLConnection implements DBConnection {
 	}
 
 	@Override
-	public boolean verifyLogin(String userId, String password) {
+	public boolean verifyLogin(String username, String password) {
 		if (conn == null) {
 			return false;
 		}
 		try {
-			String sql = "SELECT UserId FROM user WHERE UserId = ? AND password = ?";
+			String sql = "SELECT username FROM user WHERE username = ? AND password = ?";
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, userId);
+			statement.setString(1, username);
 			statement.setString(2, password);
 
 			ResultSet rs = statement.executeQuery();
@@ -167,8 +168,113 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public WashMachine findWashMachineById(long machineId) {
+
 		return null;
 		
+	}
+
+	/**
+	 * Return success or not by connecting the db to update the user
+	 *
+	 *
+	 * @param user
+	 * @Return boolean, success or not
+	 */
+	@Override
+	public boolean updateUser(User user) {
+		return true;
+	}
+
+	/**
+	 * Return success or not by connecting the db to update the washMachine
+	 *
+	 *
+	 * @param washMachine
+	 * @Return boolean, success or not
+	 */
+	@Override
+	public boolean updateWashMachine(WashMachine washMachine) {
+		return false;
+	}
+
+	/**
+	 * Return success or not by connecting the db to update the site
+	 *
+	 *
+	 * @param site
+	 * @Return boolean, success or not
+	 */
+	@Override
+	public boolean updateSite(Site site) {
+		return false;
+	}
+
+	/**
+	 * Return success or not by connecting the db to update the manager
+	 *
+	 *
+	 * @param manager
+	 * @Return boolean, success or not
+	 */
+	@Override
+	public boolean updateManger(Manager manager) {
+		return false;
+	}
+
+	/**
+	 * delete a row of user by connecting the db to find it first and then delete it if exists.
+	 * if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this case.
+	 * Throws fail to delete exceptions if there is some dependency such as foreign key issue happened and causing the deletion failed.
+	 *
+	 * @param userid
+	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
+	 * @throws Exception if delete failed.
+	 */
+	@Override
+	public void deleteUserById(int userid, boolean onCascade) throws Exception {
+
+	}
+
+	/**
+	 * delete a row of wash machine by connecting the db to find it first and then delete it if exists.
+	 * if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this case.
+	 * Throws fail to delete exceptions if there is some dependency such as foreign key issue happened and causing the deletion failed.
+	 *
+	 * @param machineId
+	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
+	 * @throws Exception if delete failed.
+	 */
+	@Override
+	public void deleteWashMachineById(long machineId, boolean onCascade) throws Exception {
+
+	}
+
+	/**
+	 * delete a row of site by connecting the db to find it first and then delete it if exists.
+	 * if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this case.
+	 * Throws fail to delete exceptions if there is some dependency such as foreign key issue happened and causing the deletion failed.
+	 *
+	 * @param address
+	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
+	 * @throws Exception if delete failed.
+	 */
+	@Override
+	public void deleteSiteByAddress(String address, boolean onCascade) throws Exception {
+
+	}
+
+	/**
+	 * delete a row of manager by connecting the db to find it first and then delete it if exists.
+	 * if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this case.
+	 * Throws fail to delete exceptions if there is some dependency such as foreign key issue happened and causing the deletion failed.
+	 *
+	 * @param employeeAccountId
+	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
+	 * @throws Exception if delete failed.
+	 */
+	@Override
+	public void deleteManagerById(int employeeAccountId, boolean onCascade) throws Exception {
+
 	}
 
 }
