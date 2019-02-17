@@ -43,13 +43,13 @@ public interface DBConnection {
 	public User findUserByUserId(int userid);
 	
 	/**
-	 * Return Manager object by query the db using employeeAccountId
+	 * Return Manager object by query the db using EmployeeAccountNumber
 	 *
 	 * 
 	 * @param employeeAccountId
 	 * @Return Manager
 	 */
-	public Manager findManagerById(int employeeAccountId);
+	public Manager findManagerById(int EmployeeAccountNumber);
 	
 	/**
 	 * Return Site object by query the db using address
@@ -76,7 +76,7 @@ public interface DBConnection {
 	 * @param user
 	 * @Return boolean, success or not
 	 */
-	public boolean updateUser(User user);
+	public boolean AddOrUpdateUser(User user);
 
 	/**
 	 * Return success or not by connecting the db to update the washMachine
@@ -85,7 +85,7 @@ public interface DBConnection {
 	 * @param washMachine
 	 * @Return boolean, success or not
 	 */
-	public boolean updateWashMachine(WashMachine washMachine);
+	public boolean AddOrUpdateWashMachine(WashMachine washMachine);
 
 	/**
 	 * Return success or not by connecting the db to update the site
@@ -94,7 +94,7 @@ public interface DBConnection {
 	 * @param site
 	 * @Return boolean, success or not
 	 */
-	public boolean updateSite(Site site);
+	public boolean AddOrUpdateSite(Site site);
 
 	/**
 	 * Return success or not by connecting the db to update the manager
@@ -103,7 +103,7 @@ public interface DBConnection {
 	 * @param manager
 	 * @Return boolean, success or not
 	 */
-	public boolean updateManger(Manager manager);
+	public boolean AddOrUpdateManger(Manager manager);
 
 	/**
 	 * delete a row of user by connecting the db to find it first and then delete it if exists.
@@ -147,7 +147,7 @@ public interface DBConnection {
 	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
 	 * @throws Exception if delete failed.
 	 */
-	public void deleteManagerById(int employeeAccountId, boolean onCascade) throws Exception;
+	public void deleteManagerById(int EmployeeAccountNumber, boolean onCascade) throws Exception;
 }
 
 

@@ -8,7 +8,9 @@ import java.sql.SQLException;
 
 import com.cinderella.dao.DBConnection;
 import com.cinderella.entity.Manager;
+import com.cinderella.entity.Manager.ManagerBuilder;
 import com.cinderella.entity.Site;
+import com.cinderella.entity.Site.SiteBuilder;
 import com.cinderella.entity.User;
 import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.WashMachine;
@@ -141,9 +143,26 @@ public class MySQLConnection implements DBConnection {
 	 * @Return Manager
 	 */
 	@Override
-	public Manager findManagerById(int employeeAccountId) {
+	public Manager findManagerById(int EmployeeAccountNumber) {
+		if (conn != null) {
+			String sql = "SELECT * FROM manager WHERE EmployeeAccountNumber = ?";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, EmployeeAccountNumber);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					ManagerBuilder builder = new ManagerBuilder();
+					builder.setEmployeeAccountNumber(EmployeeAccountNumber)
+							.setPassword(rs.getString("password"))
+							.setAccessPreviledge(rs.getInt("accessPreviledge"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				System.out.println("Not connected to MySQL");
+				e.printStackTrace();
+			}
+		}
 		return null;
-		
 	}
 	
 	/**
@@ -155,8 +174,24 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public Site findSiteByAddress(String address) {
+		if (conn != null) {
+			String sql = "SELECT * FROM site WHERE Address = ?";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, address);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					SiteBuilder builder = new SiteBuilder();
+					builder.setAddress(address)
+							.setOperatingHours(rs.getInt("OperatingHours"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				System.out.println("Not connected to MySQL");
+				e.printStackTrace();
+			}
+		}
 		return null;
-		
 	}
 	
 	/**
@@ -204,8 +239,9 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean updateUser(User user) {
-
+	public boolean AddOrUpdateUser(User user) {
+		// TO DO
+		return false;
 	}
 
 	/**
@@ -216,7 +252,8 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean updateWashMachine(WashMachine washMachine) {
+	public boolean AddOrUpdateWashMachine(WashMachine washMachine) {
+		// TO DO
 		return false;
 	}
 
@@ -228,8 +265,49 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean updateSite(Site site) {
-		return false;
+	public boolean AddOrUpdateSite(Site site) {
+		if (site == null) {
+			return false;
+		}
+		Site here = findSiteByAddress(site.getAddress());
+		int res;
+		if (here != null) { // check if the site address exists in db
+			res = updateSite(site);
+		} else {
+			res = addSite(site);
+		}
+		System.out.println(res);
+		return res != 0;
+	}
+	
+	private int addSite(Site site) {
+		String sql = "INSERT INTO site VALUES (?, ?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, site.getAddress());
+			ps.setInt(2, site.getOperatingHours());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot add into site");
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	private int updateSite(Site site) {
+		String sql = "UPDATE site SET OperatingHours = ? WHERE Address = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, site.getOperatingHours());
+			ps.setString(2, site.getAddress());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot update site");
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	/**
@@ -240,8 +318,50 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean updateManger(Manager manager) {
-		return false;
+	public boolean AddOrUpdateManger(Manager manager) {
+		if (manager == null) {
+			return false;
+		}
+		Manager man = findManagerById(manager.getEmployeeAccountNumber());
+		int res;
+		if (man != null) { // check if the manager id exists in db
+			res = updateManager(manager);
+		} else {
+			res = addManager(manager);
+		}
+		return res != 0;
+	}
+	
+	private int addManager(Manager manager) {
+		String sql = "INSERT INTO manager VALUES (?, ?, ?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, manager.getEmployeeAccountNumber());
+			ps.setString(2, manager.getPassword());
+			ps.setInt(3, manager.getAccessPreviledge());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot add into manager");
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	private int updateManager(Manager manager) {
+		String sql = "UPDATE manager SET password = ?, accessPreviledge = ? WHERE EmployeeAccountNumber = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, manager.getPassword());
+			ps.setInt(2, manager.getAccessPreviledge());
+			ps.setInt(3, manager.getEmployeeAccountNumber());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot update manager");
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	/**
@@ -283,7 +403,17 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public void deleteSiteByAddress(String address, boolean onCascade) throws Exception {
-
+		if (onCascade) {
+			throw new Exception("Not supported yet. Please delete site in a correct order.");
+		} else {
+			String sql = "DELETE FROM site WHERE Address = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, address);
+			boolean res = ps.execute();
+			if (!res) {
+				System.out.println("delete site by address might fail.");
+			}
+		}
 	}
 
 	/**
@@ -296,8 +426,18 @@ public class MySQLConnection implements DBConnection {
 	 * @throws Exception if delete failed.
 	 */
 	@Override
-	public void deleteManagerById(int employeeAccountId, boolean onCascade) throws Exception {
-
+	public void deleteManagerById(int employeeAccountNumber, boolean onCascade) throws Exception {
+		if (onCascade) {
+			throw new Exception("Not supported yet. Please delete manager in a correct order.");
+		} else {
+			String sql = "DELETE FROM manager WHERE EmployeeAccountNumber = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, employeeAccountNumber);
+			boolean res = ps.execute();
+			if (!res) {
+				System.out.println("delete manager by EmployeeAccountNumber might fail.");
+			}
+		}
 	}
 
 }
