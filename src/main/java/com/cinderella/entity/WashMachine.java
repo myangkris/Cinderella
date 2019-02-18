@@ -1,5 +1,7 @@
 package com.cinderella.entity;
 
+import java.sql.Timestamp;
+
 public class WashMachine {
 	// Fields------------------------------------------------
 	private final long id;
@@ -8,7 +10,7 @@ public class WashMachine {
 	private int usedBy;
 	private String location;
 	private int waitedBy;
-	private String startsAt;
+	private Timestamp startsAt;
 	private int waitingCapacity;
 	
 	// Constructor------------------------------------------------
@@ -47,7 +49,7 @@ public class WashMachine {
 		return waitedBy;
 	}
 	
-	public String getStartsAt() {
+	public Timestamp getStartsAt() {
 		return startsAt;
 	}
 	
@@ -81,7 +83,7 @@ public class WashMachine {
 		return this;
 	}
 
-	public WashMachine setStartsAt(String startsAt) {
+	public WashMachine setStartsAt(Timestamp startsAt) {
 		this.startsAt = startsAt;
 		return this;
 	}
@@ -100,7 +102,7 @@ public class WashMachine {
 		private int usedBy;
 		private String location;
 		private int waitedBy;
-		private String startsAt;
+		private Timestamp startsAt;
 		private int waitingCapacity;
 		
 		public WashMachine build() {
@@ -132,7 +134,7 @@ public class WashMachine {
 			this.waitedBy = waitedBy;
 			return this;
 		}
-		public WashMachineBuilder setStartsAt(String startsAt) {
+		public WashMachineBuilder setStartsAt(Timestamp startsAt) {
 			this.startsAt = startsAt;
 			return this;
 		}

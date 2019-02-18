@@ -100,8 +100,16 @@ public class MySQLTableCreation {
 			// Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
 			sql = "INSERT INTO user VALUES('1111', 'John', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
 			statement.executeUpdate(sql);
+			sql = "INSERT INTO user VALUES('2222', 'Pitt', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			statement.executeUpdate(sql);
+			sql = "INSERT INTO user VALUES('3333', 'Doug', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			statement.executeUpdate(sql);
+			sql = "INSERT INTO user VALUES('0', 'John Doe', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			statement.executeUpdate(sql);
 			
 			sql = "INSERT INTO site VALUES('1234 Center Dr', '24')";
+			statement.executeUpdate(sql);
+			sql = "INSERT INTO site VALUES('Somewhere', '24')";
 			statement.executeUpdate(sql);
 			
 			Calendar calendar = Calendar.getInstance();

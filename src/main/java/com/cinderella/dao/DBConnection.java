@@ -1,5 +1,7 @@
 package com.cinderella.dao;
 
+import java.util.List;
+
 import com.cinderella.entity.Manager;
 import com.cinderella.entity.Site;
 import com.cinderella.entity.User;
@@ -182,6 +184,16 @@ public interface DBConnection {
 	 * @throws Exception if delete failed.
 	 */
 	public void deleteManagerById(int EmployeeAccountNumber, boolean onCascade) throws Exception;
+	
+	/**
+	 * Get all the washing machines of the address.
+	 * Go through the washmachine table and get all the rows WHERE locatedAt = address
+	 * 
+	 * @param address
+	 * @return List<WashMachine>
+	 * @throws Exception
+	 */
+	public List<WashMachine> getWashMachineList(String address) throws Exception;
 }
 
 
