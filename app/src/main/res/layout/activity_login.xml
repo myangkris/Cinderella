@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".login.LoginActivity"
+    android:background="@color/darkBlue"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:orientation="vertical">
+        <TextView
+            android:textSize="30sp"
+            android:text="Account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:hint="Email/Phone Number"
+            android:background="@color/white"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please input your username!"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/red"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:hint="Password"
+            android:background="@color/white"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please input your password!"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/red"/>
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remember me"
+            android:textColor="@color/white"
+            android:layout_marginBottom="20dp"/>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="Sign In"
+            android:background="@color/lightBlue"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Sign up today"
+            android:textColor="@color/white"
+            android:layout_marginBottom="20dp"/>
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/yellow"
+            android:textColor="@color/white"
+            android:text="Sign Up"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/home_image1"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_image" />
+
+    
+
+</LinearLayout>
