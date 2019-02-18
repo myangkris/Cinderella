@@ -226,6 +226,7 @@ public class MySQLConnection implements DBConnection {
 			System.err.println("DB connection failed");
 			return false;
 		}
+		// check if the machine already existed
 		boolean exist = false;
 		try {
 //			String sql = "IF EXISTS (SELECT * FROM washmachine WHERE MachineID = ?) SELECT '1' ELSE SELECT '0'";

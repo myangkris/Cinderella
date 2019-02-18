@@ -151,7 +151,7 @@ public class Test {
 		
 		// Test5: DeleteMachineById(666)
 		System.out.println("----------------------------------");
-		System.out.println("Test5: delete machine id '233' ");
+		System.out.println("Test5: delete machine id '666' ");
 		try {
 			conn.deleteWashMachineById(666, false);
 		} catch (Exception e) {

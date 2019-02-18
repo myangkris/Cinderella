@@ -8,7 +8,7 @@ public class WashMachine {
 		1	MachineIDPrimary	int(13)			No
 		2	status	            int(255)		No
 		3	pricePerService	    float(4,2)		Yes
-		4	UsedByIndex	        int(7)			Yes
+		4	UsedById            int(7)			Yes
 		5	locatedAtIndex	    varchar(255)	Yes
 		6	WaitedByIndex	    int(7)			Yes
 		7	startsAt	        timestamp		No
