@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cinderella.dao.DBConnection;
@@ -569,10 +570,45 @@ public class MySQLConnection implements DBConnection {
 		}
 	}
 
+	/**
+	 * Get all the washing machines of the address.
+	 * Go through the washmachine table and get all the rows WHERE locatedAt = address.
+	 * If connection failed, return null. If no machines found, return empty list.
+	 * 
+	 * @param address
+	 * @return List<WashMachine>
+	 * @throws Exception
+	 */
 	@Override
 	public List<WashMachine> getWashMachineList(String address) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return null;
+		}
+		List<WashMachine> list = new ArrayList<>();
+		String sql = "SELECT * FROM washmachine WHERE locatedAt = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, address);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				WashMachineBuilder builder = new WashMachineBuilder();
+				builder.setId(rs.getLong("MachineId"));
+				builder.setStatus(rs.getInt("status"));
+				builder.setPricePerService(rs.getFloat("pricePerService"));
+				builder.setUsedBy(rs.getInt("UsedBy"));
+				builder.setLocation(rs.getString("locatedAt"));
+				builder.setWaitedBy(rs.getInt("WaitedBy"));
+				builder.setStartsAt(rs.getTimestamp("startsAt"));
+				builder.setWaitingCapacity(rs.getInt("waitingCapacity"));
+				list.add(builder.build());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Not connected to MySQL");
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }
