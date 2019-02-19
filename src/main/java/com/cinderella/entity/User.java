@@ -5,8 +5,8 @@ public class User {
 	private final int id;
 	private final String name;
 	private String password;
-	private int balance;
-	private int phoneNumber;
+	private double balance;
+	private long phoneNumber;
 	private int bonusPoints;
 	private String email;
 	
@@ -24,8 +24,8 @@ public class User {
 		private int userId;
 		private String userName;
 		private String userPassword;
-		private int userBalance;
-		private int userPhoneNumber;
+		private double userBalance;
+		private long userPhoneNumber;
 		private int userBonusPoints;
 		private String userEmail;
 		
@@ -48,12 +48,12 @@ public class User {
 			return this;
 		}
 		
-		public UserBuilder setUserBalance(int userBalance) {
+		public UserBuilder setUserBalance(double userBalance) {
 			this.userBalance = userBalance;
 			return this;
 		}
 		
-		public UserBuilder setUserPhoneNumber(int userPhoneNumber) {
+		public UserBuilder setUserPhoneNumber(long userPhoneNumber) {
 			this.userPhoneNumber = userPhoneNumber;
 			return this;
 		}
@@ -87,20 +87,20 @@ public class User {
 		return this;
 	}
 	
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 	
-	public User setBalance(int balance) {
+	public User setBalance(double balance) {
 		this.balance = balance;
 		return this;
 	}
 	
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 	
-	public User setPhoneNumber(int phoneNumber) {
+	public User setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		return this;
 	}

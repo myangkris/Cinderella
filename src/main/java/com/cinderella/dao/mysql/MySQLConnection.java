@@ -85,8 +85,8 @@ public class MySQLConnection implements DBConnection {
 					builder.setUserId(rs.getInt("UserId"));
 					builder.setUserName(rs.getString("username"));
 					builder.setUserPassword(rs.getString("password"));
-					builder.setUserBalance(rs.getInt("balance"));
-					builder.setUserPhoneNumber(rs.getInt("phoneNumber"));
+					builder.setUserBalance(rs.getDouble("balance"));
+					builder.setUserPhoneNumber(rs.getLong("phoneNumber"));
 					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
 					builder.setUserEmail(rs.getString("email"));
 					return builder.build();
@@ -98,11 +98,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return null;
 	}
-	/*
-	sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance INT(9),"
-						+ "phoneNumber INT(11)," + "bonusPoints INT(9)," + "email VARCHAR(255),"
-						+ "PRIMARY KEY (UserId)" + ")";
-	*/
+
 	/**
 	 * Return User object by query the db using userid
 	 *
@@ -123,8 +119,8 @@ public class MySQLConnection implements DBConnection {
 					builder.setUserId(rs.getInt("UserId"));
 					builder.setUserName(rs.getString("username"));
 					builder.setUserPassword(rs.getString("password"));
-					builder.setUserBalance(rs.getInt("balance"));
-					builder.setUserPhoneNumber(rs.getInt("phoneNumber"));
+					builder.setUserBalance(rs.getDouble("balance"));
+					builder.setUserPhoneNumber(rs.getLong("phoneNumber"));
 					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
 					builder.setUserEmail(rs.getString("email"));
 					return builder.build();
