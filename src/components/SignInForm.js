@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    Form, Icon, Input, Button, Checkbox,
+    Form, Icon, Input, Button, Checkbox, message,
 } from 'antd';
 
 class NormalLoginForm extends React.Component {
@@ -9,6 +9,25 @@ class NormalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                fetch(`${''}/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: values.username,
+                        password: values.password,
+                    }),
+                }).then((response) => {
+                    if(response.ok) {
+                        return response.text()
+                    }
+                    throw new Error(response.statusText)
+                }).then((data) => {
+                    message.success('Login Success!')
+                    console.log(data)
+                    this.props.handleSuccessfulLogin(data)
+                }).catch((e) => {
+                    console.log(e)
+                    message.error('Login Failed')
+                })
             }
         });
     }

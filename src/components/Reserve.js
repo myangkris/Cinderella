@@ -4,6 +4,12 @@ import {Footer} from './Footer'
 import {MachineStatus} from './MachineStatus'
 
 export class Reserve extends React.Component {
+    state = {
+        machineID: '',
+        isAvailable: true,
+        isOccupied: false,
+        isMalfunctioned: false,
+    }
     render() {
         return(
             <div>
