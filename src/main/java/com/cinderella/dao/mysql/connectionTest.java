@@ -17,7 +17,8 @@ public class connectionTest {
 		 * Test 5: delete negative test.
 		 */
 		DBConnection connection = DBConnectionFactory.getConnection();
-		
+		System.out.println("__________________________________________________________________________________________");
+		System.out.println("Now it's the site CRUD tests.");
 		// Test 1
 		Site site = connection.findSiteByAddress("1234 Center Dr");
 		if (site != null) {
