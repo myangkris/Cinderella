@@ -540,7 +540,7 @@ public class MySQLConnection implements DBConnection {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, address);
 			boolean res = ps.execute();
-			if (!res) {
+			if (res) {
 				System.out.println("delete site by address might fail.");
 			}
 		}
@@ -564,8 +564,8 @@ public class MySQLConnection implements DBConnection {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, employeeAccountNumber);
 			boolean res = ps.execute();
-			if (!res) {
-				System.out.println("delete manager by EmployeeAccountNumber might fail.");
+			if (res) {
+				System.out.println("delete manager by EmployeeAccountNumber might fail due to none such employeeAccountNumber in db.");
 			}
 		}
 	}

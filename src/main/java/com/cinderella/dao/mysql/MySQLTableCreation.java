@@ -46,7 +46,7 @@ public class MySQLTableCreation {
 			// Step 3 Create new tables
 //			User, Manager, Site, WashMachine, ReportDefect, Manage 
 			
-			sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance INT(9),"
+			sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL auto_increment," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance INT(9),"
 					+ "phoneNumber INT(11)," + "bonusPoints INT(9)," + "email VARCHAR(255),"
 					+ "PRIMARY KEY (UserId)" + ")";
 			statement.executeUpdate(sql);
@@ -98,13 +98,13 @@ public class MySQLTableCreation {
 			statement.executeUpdate(sql);
 			
 			// Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
-			sql = "INSERT INTO user VALUES('1111', 'John', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('John', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
 			statement.executeUpdate(sql);
-			sql = "INSERT INTO user VALUES('2222', 'Pitt', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('Pitt', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
 			statement.executeUpdate(sql);
-			sql = "INSERT INTO user VALUES('3333', 'Doug', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('Doug', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
 			statement.executeUpdate(sql);
-			sql = "INSERT INTO user VALUES('0', 'John Doe', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('John Doe', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
 			statement.executeUpdate(sql);
 			
 			sql = "INSERT INTO site VALUES('1234 Center Dr', '24')";
@@ -116,7 +116,7 @@ public class MySQLTableCreation {
 		    java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
 		    
 //			INSERT INTO `washmachine` (`MachineID`, `status`, `pricePerService`, `UsedBy`, `locatedAt`, `WaitedBy`, `startsAt`, `waitingCapacity`) VALUES ('233', '2', '2.1', '1111', '1234 Center Dr', NULL, CURRENT_TIMESTAMP, '1')
-			sql = "INSERT INTO washmachine VALUES('233', '3', '2.1', '1111', '1234 Center Dr', null, ?, '1')";
+			sql = "INSERT INTO washmachine(MachineID, status, pricePerService, UsedBy, locatedAt, startsAt, waitingCapacity) VALUES('233', '3', '2.1', '1', '1234 Center Dr', ?, '1')";
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 		    preparedStatement.setTimestamp(1, ourJavaTimestampObject);
 		    preparedStatement.executeUpdate();
