@@ -1,13 +1,21 @@
 package com.cinderella.service.account;
 
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.cinderella.dao.DBConnection;
 import com.cinderella.dao.DBConnectionFactory;
 import com.cinderella.dao.mysql.MySQLConnection;
 import com.cinderella.entity.User;
+import com.cinderella.entity.WashMachine;
 import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.service.account.Transaction;
 
 public class UserAccount extends Account implements Transaction{
+	final static String address = "1234 Center Dr";
 	private User user;
 	DBConnection connection;
 	
@@ -82,11 +90,47 @@ public class UserAccount extends Account implements Transaction{
 	}
 
 	@Override
-	public User getProfile() {
+	public JSONObject getProfile() {
 		// TODO Auto-generated method stub
-		return user;
+		JSONObject obj = new JSONObject();
+					try {
+						obj.put("name", user.getName());
+						obj.put("balance", user.getBalance());
+						obj.put("phone_number", user.getPhoneNumber());
+						obj.put("bonus_point", user.getBonusPoints());
+						obj.put("email", user.getEmail());
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+		return obj;
 	}
 	
+	public JSONArray checkMachineList() throws Exception {
+		List<WashMachine> list =  connection.getWashMachineList(address);
+		return toJSONArray(list);
+	}
+	
+	private JSONArray toJSONArray(List<WashMachine> list) {
+		JSONArray array = new JSONArray();
+		for(WashMachine washmachine : list) {
+			JSONObject obj = new JSONObject();
+//`MachineID`, `status`, `pricePerService`, `UsedBy`, `locatedAt`, `WaitedBy`, `startsAt`, `waitingCapacity`
+			try {
+				obj.put("MachineID", washmachine.getId());
+				obj.put("status", washmachine.getStatus());
+				obj.put("pricePerService", washmachine.getPricePerService());
+				obj.put("UsedBy", washmachine.getUsedBy());
+				obj.put("locatedAt", washmachine.getLocation());
+				obj.put("WaitedBy", washmachine.getWaitedBy());
+				obj.put("startsAt", washmachine.getStartsAt());
+				obj.put("waitingCapacity", washmachine.getWaitingCapacity());
+				array.put(obj);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return array;
+	}
 //	public static void main(String arg[]) {
 //		String userName = "John";
 //		UserAccount useraccount = new UserAccount(userName);

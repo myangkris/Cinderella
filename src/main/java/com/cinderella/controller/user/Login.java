@@ -1,6 +1,8 @@
 package com.cinderella.controller.user;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.cinderella.entity.WashMachine;
 import com.cinderella.service.account.Account;
 import com.cinderella.service.account.UserAccount;
 
@@ -69,7 +73,9 @@ public class Login extends HttpServlet {
 				session.setAttribute("userName", userName);
 				session.setMaxInactiveInterval(600);
 				UserAccount account = new UserAccount(userName);
-				obj.put("status", "OK").put("balance" , account.checkBalance());
+				JSONArray array = account.checkMachineList();
+				JSONObject user = account.getProfile();
+				obj.put("status", "OK").put("user_info" , user).put("machine_list" , array);
 			} else {
 				response.setStatus(401);
 				obj.put("status", "User Doesn't Exist");

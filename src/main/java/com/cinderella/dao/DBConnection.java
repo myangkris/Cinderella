@@ -1,7 +1,6 @@
 package com.cinderella.dao;
 
 import java.util.List;
-import java.util.Set;
 
 import com.cinderella.entity.Manager;
 import com.cinderella.entity.Site;
@@ -43,13 +42,13 @@ public interface DBConnection {
 	public User findUserByUserId(int userid);
 	
 	/**
-	 * Return Manager object by query the db using employeeAccountId
+	 * Return Manager object by query the db using EmployeeAccountNumber
 	 *
 	 * 
 	 * @param employeeAccountId
 	 * @Return Manager
 	 */
-	public Manager findManagerById(int employeeAccountId);
+	public Manager findManagerById(int EmployeeAccountNumber);
 	
 	/**
 	 * Return Site object by query the db using address
@@ -70,6 +69,24 @@ public interface DBConnection {
 	public WashMachine findWashMachineById(long machineId);
 
 	/**
+	 * Return success or not by connecting the db to add or modify the user
+	 *
+	 *
+	 * @param user
+	 * @Return boolean, success or not
+	 */
+	public boolean addOrUpdateUser(User user);
+	
+	/**
+	 * Return success or not by connecting the db to add the user
+	 *
+	 *
+	 * @param user
+	 * @Return boolean, success or not
+	 */
+	public boolean addUser(User user);
+	
+	/**
 	 * Return success or not by connecting the db to update the user
 	 *
 	 *
@@ -78,6 +95,25 @@ public interface DBConnection {
 	 */
 	public boolean updateUser(User user);
 
+	/**
+	 * Return success or not by connecting the db to add or modify the washMachine
+	 *
+	 *
+	 * @param washMachine
+	 * @Return boolean, success or not
+	 */
+	public boolean addOrUpdateWashMachine(WashMachine washMachine);
+	
+	/**
+	 * Return success or not by connecting the db to add the washMachine
+	 *
+	 *
+	 * @param washMachine
+	 * @Return boolean, success or not
+	 */
+	public boolean addWashMachine(WashMachine washMachine);
+	
+	
 	/**
 	 * Return success or not by connecting the db to update the washMachine
 	 *
@@ -88,22 +124,22 @@ public interface DBConnection {
 	public boolean updateWashMachine(WashMachine washMachine);
 
 	/**
-	 * Return success or not by connecting the db to update the site
+	 * Return success or not by connecting the db to add or modify the site
 	 *
 	 *
 	 * @param site
 	 * @Return boolean, success or not
 	 */
-	public boolean updateSite(Site site);
+	public boolean addOrUpdateSite(Site site);
 
 	/**
-	 * Return success or not by connecting the db to update the manager
+	 * Return success or not by connecting the db to add or modify the manager
 	 *
 	 *
 	 * @param manager
 	 * @Return boolean, success or not
 	 */
-	public boolean updateManger(Manager manager);
+	public boolean addOrUpdateManger(Manager manager);
 
 	/**
 	 * delete a row of user by connecting the db to find it first and then delete it if exists.
@@ -147,7 +183,17 @@ public interface DBConnection {
 	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
 	 * @throws Exception if delete failed.
 	 */
-	public void deleteManagerById(int employeeAccountId, boolean onCascade) throws Exception;
+	public void deleteManagerById(int EmployeeAccountNumber, boolean onCascade) throws Exception;
+	
+	/**
+	 * Get all the washing machines of the address.
+	 * Go through the washmachine table and get all the rows WHERE locatedAt = address
+	 * 
+	 * @param address
+	 * @return List<WashMachine>
+	 * @throws Exception
+	 */
+	public List<WashMachine> getWashMachineList(String address) throws Exception;
 }
 
 

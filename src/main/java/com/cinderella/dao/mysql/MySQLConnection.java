@@ -5,14 +5,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.cinderella.dao.DBConnection;
 import com.cinderella.entity.Manager;
+import com.cinderella.entity.Manager.ManagerBuilder;
 import com.cinderella.entity.Site;
+import com.cinderella.entity.Site.SiteBuilder;
 import com.cinderella.entity.User;
 import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.WashMachine;
-
+import com.cinderella.entity.WashMachine.WashMachineBuilder;;
 
 
 public class MySQLConnection implements DBConnection {
@@ -141,9 +145,26 @@ public class MySQLConnection implements DBConnection {
 	 * @Return Manager
 	 */
 	@Override
-	public Manager findManagerById(int employeeAccountId) {
+	public Manager findManagerById(int EmployeeAccountNumber) {
+		if (conn != null) {
+			String sql = "SELECT * FROM manager WHERE EmployeeAccountNumber = ?";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, EmployeeAccountNumber);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					ManagerBuilder builder = new ManagerBuilder();
+					builder.setEmployeeAccountNumber(EmployeeAccountNumber)
+							.setPassword(rs.getString("password"))
+							.setAccessPreviledge(rs.getInt("accessPreviledge"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				System.out.println("Not connected to MySQL");
+				e.printStackTrace();
+			}
+		}
 		return null;
-		
 	}
 	
 	/**
@@ -155,8 +176,24 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public Site findSiteByAddress(String address) {
+		if (conn != null) {
+			String sql = "SELECT * FROM site WHERE Address = ?";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, address);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					SiteBuilder builder = new SiteBuilder();
+					builder.setAddress(address)
+							.setOperatingHours(rs.getInt("OperatingHours"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				System.out.println("Not connected to MySQL");
+				e.printStackTrace();
+			}
+		}
 		return null;
-		
 	}
 	
 	/**
@@ -168,11 +205,34 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public WashMachine findWashMachineById(long machineId) {
-
+		if (conn != null) {
+			String sql = "SELECT * FROM washmachine WHERE MachineId = ?";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setLong(1, machineId);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					WashMachineBuilder builder = new WashMachineBuilder();
+					builder.setId(rs.getLong("MachineId"));
+					builder.setStatus(rs.getInt("status"));
+					builder.setPricePerService(rs.getFloat("pricePerService"));
+					builder.setUsedBy(rs.getInt("UsedBy"));
+					builder.setLocation(rs.getString("locatedAt"));
+					builder.setWaitedBy(rs.getInt("WaitedBy"));
+					builder.setStartsAt(rs.getTimestamp("startsAt"));
+					builder.setWaitingCapacity(rs.getInt("waitingCapacity"));
+					return builder.build();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Not connected to MySQL");
+				e.printStackTrace();
+			}
+		}
 		return null;
 		
 	}
-
+		
 	/**
 	 * Return success or not by connecting the db to update the user
 	 *
@@ -181,8 +241,21 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
+	public boolean addOrUpdateUser(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean addUser(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public boolean updateUser(User user) {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**
@@ -193,7 +266,102 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
+	public boolean addOrUpdateWashMachine(WashMachine washMachine) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return false;
+		}
+		// check if the machine already existed
+		WashMachine mac = findWashMachineById(washMachine.getId());
+
+		if (mac != null) {
+			System.out.println("Call update helper");
+			return updateWashMachine(washMachine);
+		} else {
+			System.out.println("Call insert helper");
+			return addWashMachine(washMachine);
+		}
+	}
+	
+	@Override
+	public boolean addWashMachine(WashMachine washMachine) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return false;
+		}
+		try {
+			// id, status, pricePerService, usedBy, location, waitedBy, startsAt,
+			// waitingCapacity;
+			String sql = "INSERT INTO washmachine VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, washMachine.getId());
+			ps.setInt(2, washMachine.getStatus());
+			ps.setFloat(3, washMachine.getPricePerService());
+			ps.setInt(4, washMachine.getUsedBy());
+			if (washMachine.getLocation() != null) {
+				ps.setString(5, washMachine.getLocation());
+			} else {
+				ps.setNull(5, java.sql.Types.VARCHAR);
+			}
+			ps.setInt(6, washMachine.getWaitedBy());
+			ps.setTimestamp(7, washMachine.getStartsAt());
+			ps.setInt(8, washMachine.getWaitingCapacity());
+
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
 	public boolean updateWashMachine(WashMachine washMachine) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return false;
+		}
+		try {
+			// When creating a new wash machine with washMachineBuilder,
+			// if the usedBy and waitedBy is not set, it will be 0 by default,
+			// because in entity.washMachine, usedBy and waitedBy are int.
+			// So fake user '0' is needed in user table to indicates 'no user'.
+			
+			// Explanation of why ps.setString(4, washMachine.getLocation()) is more complicated:
+			// If location is not set, it will be null.
+			// But we don't have fake address 'null'.
+			// So before the location set to database, it needs to be checked.
+			// If it is null, we set it null.
+			
+			String sql = "UPDATE washmachine SET "
+					+ "status = ?, "
+					+ "pricePerService = ?, " 
+					+ "UsedBy = ?, " 
+					+ "locatedAt = ?, " 
+					+ "WaitedBy = ?, "
+					+ "startsAt = ?, " 
+					+ "waitingCapacity = ? " 
+					+ "WHERE MachineId = ? ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, washMachine.getStatus());
+			ps.setFloat(2, washMachine.getPricePerService());
+			ps.setInt(3, washMachine.getUsedBy());
+			if (washMachine.getLocation() != null) {
+				ps.setString(4, washMachine.getLocation());
+			} else {
+				ps.setNull(4, java.sql.Types.VARCHAR);
+			}
+			ps.setInt(5, washMachine.getWaitedBy());
+			ps.setTimestamp(6, washMachine.getStartsAt());
+			ps.setInt(7, washMachine.getWaitingCapacity());
+			ps.setLong(8, washMachine.getId());
+
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
@@ -205,8 +373,49 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean updateSite(Site site) {
-		return false;
+	public boolean addOrUpdateSite(Site site) {
+		if (site == null) {
+			return false;
+		}
+		Site here = findSiteByAddress(site.getAddress());
+		int res;
+		if (here != null) { // check if the site address exists in db
+			res = updateSite(site);
+		} else {
+			res = addSite(site);
+		}
+		System.out.println(res);
+		return res != 0;
+	}
+	
+	private int addSite(Site site) {
+		String sql = "INSERT INTO site VALUES (?, ?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, site.getAddress());
+			ps.setInt(2, site.getOperatingHours());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot add into site");
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	private int updateSite(Site site) {
+		String sql = "UPDATE site SET OperatingHours = ? WHERE Address = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, site.getOperatingHours());
+			ps.setString(2, site.getAddress());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot update site");
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	/**
@@ -217,8 +426,50 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean updateManger(Manager manager) {
-		return false;
+	public boolean addOrUpdateManger(Manager manager) {
+		if (manager == null) {
+			return false;
+		}
+		Manager man = findManagerById(manager.getEmployeeAccountNumber());
+		int res;
+		if (man != null) { // check if the manager id exists in db
+			res = updateManager(manager);
+		} else {
+			res = addManager(manager);
+		}
+		return res != 0;
+	}
+	
+	private int addManager(Manager manager) {
+		String sql = "INSERT INTO manager VALUES (?, ?, ?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, manager.getEmployeeAccountNumber());
+			ps.setString(2, manager.getPassword());
+			ps.setInt(3, manager.getAccessPreviledge());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot add into manager");
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	private int updateManager(Manager manager) {
+		String sql = "UPDATE manager SET password = ?, accessPreviledge = ? WHERE EmployeeAccountNumber = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, manager.getPassword());
+			ps.setInt(2, manager.getAccessPreviledge());
+			ps.setInt(3, manager.getEmployeeAccountNumber());
+			int res = ps.executeUpdate();
+			return res;
+		} catch (SQLException e) {
+			System.out.println("Cannot update manager");
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	/**
@@ -246,7 +497,29 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public void deleteWashMachineById(long machineId, boolean onCascade) throws Exception {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return;
+		}
+		// check if the machine already existed
+		WashMachine mac = findWashMachineById(machineId);
 
+		if (mac != null) {
+			try {
+				System.out.println("Start to delete the machine");
+				String sql = "DELETE FROM washmachine WHERE MachineID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setLong(1, machineId);
+				ps.execute();
+				System.out.println("Successful deletion");
+			} catch (Exception e) {
+				System.out.println("error!");
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("The machine is not existed");
+			return;
+		}
 	}
 
 	/**
@@ -260,7 +533,17 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public void deleteSiteByAddress(String address, boolean onCascade) throws Exception {
-
+		if (onCascade) {
+			throw new Exception("Not supported yet. Please delete site in a correct order.");
+		} else {
+			String sql = "DELETE FROM site WHERE Address = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, address);
+			boolean res = ps.execute();
+			if (!res) {
+				System.out.println("delete site by address might fail.");
+			}
+		}
 	}
 
 	/**
@@ -273,8 +556,59 @@ public class MySQLConnection implements DBConnection {
 	 * @throws Exception if delete failed.
 	 */
 	@Override
-	public void deleteManagerById(int employeeAccountId, boolean onCascade) throws Exception {
+	public void deleteManagerById(int employeeAccountNumber, boolean onCascade) throws Exception {
+		if (onCascade) {
+			throw new Exception("Not supported yet. Please delete manager in a correct order.");
+		} else {
+			String sql = "DELETE FROM manager WHERE EmployeeAccountNumber = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, employeeAccountNumber);
+			boolean res = ps.execute();
+			if (!res) {
+				System.out.println("delete manager by EmployeeAccountNumber might fail.");
+			}
+		}
+	}
 
+	/**
+	 * Get all the washing machines of the address.
+	 * Go through the washmachine table and get all the rows WHERE locatedAt = address.
+	 * If connection failed, return null. If no machines found, return empty list.
+	 * 
+	 * @param address
+	 * @return List<WashMachine>
+	 * @throws Exception
+	 */
+	@Override
+	public List<WashMachine> getWashMachineList(String address) throws Exception {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return null;
+		}
+		List<WashMachine> list = new ArrayList<>();
+		String sql = "SELECT * FROM washmachine WHERE locatedAt = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, address);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				WashMachineBuilder builder = new WashMachineBuilder();
+				builder.setId(rs.getLong("MachineId"));
+				builder.setStatus(rs.getInt("status"));
+				builder.setPricePerService(rs.getFloat("pricePerService"));
+				builder.setUsedBy(rs.getInt("UsedBy"));
+				builder.setLocation(rs.getString("locatedAt"));
+				builder.setWaitedBy(rs.getInt("WaitedBy"));
+				builder.setStartsAt(rs.getTimestamp("startsAt"));
+				builder.setWaitingCapacity(rs.getInt("waitingCapacity"));
+				list.add(builder.build());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Not connected to MySQL");
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

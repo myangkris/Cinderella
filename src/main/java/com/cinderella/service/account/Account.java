@@ -1,5 +1,7 @@
 package com.cinderella.service.account;
 
+import org.json.JSONObject;
+
 import com.cinderella.dao.DBConnection;
 import com.cinderella.dao.DBConnectionFactory;
 import com.cinderella.entity.User;
@@ -30,6 +32,6 @@ public abstract class Account {
 	
 	public abstract boolean updateProfile(User user);
 	
-	public abstract User getProfile();
+	public abstract JSONObject getProfile();
 	
 }
