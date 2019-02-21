@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toolbar_profile"
+        android:icon="@mipmap/ic_launcher"
+        android:orderInCategory="1"
+        android:title="Profile"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/toolbar_balance"
+        android:orderInCategory="2"
+        android:title="Your balance: "
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/toolbar_logout"
+        android:orderInCategory="3"
+        android:title="Logout"
+        app:showAsAction="never" />
+</menu>
