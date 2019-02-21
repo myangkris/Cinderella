@@ -154,6 +154,95 @@ public class connectionTest {
 			System.out.printf("Test 5 falied due to unknown reason. See the stack trace log below.");
 			e.printStackTrace();
 		}
+		
+		/* User CRUD tests.
+		 * 
+		 * Test 1: find by id positive test.
+		 * Test 2: find by id negative test.
+		 * Test 3: find by name positive test.
+		 * Test 4: find by name negative test.
+		 * Test 5: add user positive test.
+		 * Test 6: update user positive test.
+		 * Test 7: delete positive test.
+		 * Test 8: delete negative test.
+		 */
+		System.out.println("__________________________________________________________________________________________");
+		System.out.println("Now it's the user CRUD tests.");
+		// Test 1
+		User user = connection.findUserByUserId(1);
+		if (user != null) {
+			System.out.println("Test 1: findUserByUserId passed.");
+		} else {
+			System.out.println("Test 1: findUserByUserId failed.");
+		}
+		
+		// Test 2
+		user = connection.findUserByUserId(9999);
+		if (user == null) {
+			System.out.println("Test 2: findUserByUserId passed.");
+		} else {
+			System.out.println("Test 2: findUserByUserId failed.");
+		}
+		
+		// Test 3
+		user = connection.findUserByUsername("John");
+		if (user != null) {
+			System.out.println("Test 3: findUserByUsername passed.");
+		} else {
+			System.out.println("Test 3: findUserByUsername failed.");
+		}
+		
+		// Test 4
+		user = connection.findUserByUsername("JJohn");
+		if (user == null) {
+			System.out.println("Test 4: findUserByUsername passed.");
+		} else {
+			System.out.println("Test 4: findUserByUsername failed.");
+		}
+		
+		// Test 5
+		User.UserBuilder userBuilder = new User.UserBuilder();
+		userBuilder.setUserId(9999);
+		userBuilder.setUserName("Unnamed");
+		userBuilder.setUserPassword("123456");
+		userBuilder.setUserBalance(998.1);
+		userBuilder.setUserPhoneNumber(987654321);
+		userBuilder.setUserBonusPoints(23);
+		userBuilder.setUserEmail("unnamed@laioffer.com");
+		user = userBuilder.build();
+		boolean success = connection.addUser(user);
+		if (success) {
+			System.out.println("Test 5: addUser passed.");
+		} else {
+			System.out.println("Test 5: addUser failed.");
+		}
+		
+		// Test 6
+		user.setBonusPoints(32);
+		success = connection.updateUser(user);
+		if (success) {
+			System.out.println("Test 6: updateUser passed.");
+		} else {
+			System.out.println("Test 6: updateUser failed.");
+		}
+		
+		// Test 7
+		try {
+			connection.deleteUserById(9999, false);
+			System.out.println("Test 7: deleteUserById passed.");
+		} catch (Exception e) {
+			System.out.println("Test 7: deleteUserById failed.");
+			e.printStackTrace();
+		}
+		
+		// Test 8
+		try {
+			connection.deleteUserById(9999, false);
+			System.out.println("Test 8: deleteUserById passed.");
+		} catch (Exception e) {
+			System.out.println("Test 8: deleteUserById failed.");
+			e.printStackTrace();
+		}
 	}
 
 }
