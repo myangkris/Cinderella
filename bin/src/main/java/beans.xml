@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-5.1.xsd">
+    
+    <context:annotation-config />
+    <context:component-scan base-package="com.cinderella" />
+    
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">  
+    	<property name="brokerURL" value="tcp://localhost:61616"/>  
+    	<property name="userName" value="cinderella"/>
+      	<property name="password" value="cinderella"/>
+    </bean> 
+	
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">  
+        <property name="connectionFactory" ref="targetConnectionFactory"/>  
+        <property name="maxConnections" value="10"/>  
+    </bean>
+    
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">  
+        <property name="targetConnectionFactory" ref="pooledConnectionFactory"/>  
+    </bean>
+
+    <bean id="washingQueue" class="org.apache.activemq.command.ActiveMQQueue">  
+        <constructor-arg>  
+            <value>WashingQueue</value>  
+        </constructor-arg>
+    </bean>
+    
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="defaultDestination"><ref bean="washingQueue"/></property>
+    </bean>
+    <bean id="washingMessageProducer" class="com.cinderella.dao.timing.WashingMessageProducerImpl" lazy-init="false"></bean>
+    
+    <bean id="washingCompleteListener" class="com.cinderella.dao.timing.WashingCompleteListener"/>
+    
+    <bean id="washingCompleteListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <property name="destination" ref="washingQueue" />  
+        <property name="messageListener" ref="washingCompleteListener" />  
+    </bean>
+</beans>
