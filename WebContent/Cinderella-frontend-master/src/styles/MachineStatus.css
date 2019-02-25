@@ -1,0 +1,16 @@
+.status-wrapper{
+    display: grid;
+    grid-gap: 20px 20px;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    padding: 2rem 5rem;
+}
+
+.status-wrapper img{
+    width: 110px;
+}
+
+.machine-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

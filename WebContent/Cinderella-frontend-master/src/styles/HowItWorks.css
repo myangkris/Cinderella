@@ -1,0 +1,53 @@
+.how-it-works{
+    display: grid;
+    grid-template-areas:
+        'how-to-reserve how-to-reserve-demo'
+        'how-to-track-demo how-to-track'
+        'how-to-report how-to-report-demo';
+}
+
+.how-it-works img{
+    width: 400px;
+}
+
+.how-to-reserve{
+    grid-area: how-to-reserve;
+    background-color: #fff;
+    padding: 1rem 6rem;
+}
+
+.how-to-reserve-demo{
+    grid-area: how-to-reserve-demo;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.how-to-track-demo{
+    grid-area: how-to-track-demo;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.how-to-track{
+    grid-area: how-to-track;
+    background-color: #eee;
+    padding: 1rem 6rem
+}
+
+.how-to-report{
+    grid-area: how-to-report;
+    background-color: #fff;
+    padding: 1rem 6rem;
+}
+
+.how-to-report-demo{
+    grid-area: how-to-report-demo;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

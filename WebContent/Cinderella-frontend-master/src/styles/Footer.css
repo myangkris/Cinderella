@@ -1,0 +1,38 @@
+.footer-img-container img{
+    height: 100px;
+    padding: 1rem 6rem;
+}
+
+.footer-top{
+    background-color: var(--darkBlue);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.footer-connect{
+    text-align: end;
+    color: #fff;
+    padding: 1rem 6rem;
+}
+
+.footer-connect h1{
+    font-size: 1rem;
+    color: #fff;
+}
+
+.footer-copyright{
+    background-color: #1f3144;
+    color: #fff;
+    padding-left: 6rem;
+}
+
+.icon-group{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon-group svg{
+    margin-left: 0.2rem;
+}
+
+

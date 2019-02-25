@@ -1,0 +1,26 @@
+.main-nav ul{
+    display: grid;
+    grid-gap: 50px;
+    padding: 0.8rem;
+    list-style: none;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: var(--darkBlue);
+    font-weight: 600;
+    font-size: 0.8rem;
+    box-shadow: var(--shadow);
+}
+
+.main-nav a {
+    background-color: var(--orange);
+    display: block;
+    text-decoration: none;
+    padding: 0.5rem;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.main-nav a:hover{
+    color: var(--darkBlueHover);
+    background-color: var(--orangeHover);
+}
