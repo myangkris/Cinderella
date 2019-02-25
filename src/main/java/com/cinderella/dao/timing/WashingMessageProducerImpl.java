@@ -9,8 +9,6 @@ import org.springframework.jms.core.MessageCreator;
 
 import com.cinderella.dto.WashingInfo;
 
-import java.util.Random;
-
 import javax.annotation.Resource;
 import javax.jms.*;
 
@@ -22,31 +20,28 @@ public class WashingMessageProducerImpl implements WashingMessageProducer {
     @Override
     public void produce(final WashingInfo washingInfo) {
         Destination destination = jmsTemplate.getDefaultDestination();
-		for (int i = 0; i < 3; i++) {
-		    jmsTemplate.send(destination, new MessageCreator() {
-		        public Message createMessage(Session session) throws JMSException {
-		          MapMessage msg = session.createMapMessage();
-		          int num = new Random().nextInt(1000);
-		          msg.setStringProperty("machineId", washingInfo.getMachineId() + "-" + num);
-		          msg.setLongProperty("time", System.currentTimeMillis());
-		          msg.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, washingInfo.getWashingDuration());
-		          msg.setStringProperty("userId", washingInfo.getUserId() + "_" + num);
-		          
-		          System.out.println(String.format("%s - %s - %s", 
-		                  msg.getStringProperty("userId"), 
-		                  msg.getStringProperty("machineId"), 
-		                  msg.getLongProperty("time")));
-		          return msg;
-		        }
-		    });
-		    
-		    try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-		}
+	    jmsTemplate.send(destination, new MessageCreator() {
+	        public Message createMessage(Session session) throws JMSException {
+	          MapMessage msg = session.createMapMessage();
+	          msg.setStringProperty("machineId", washingInfo.getMachineId());
+	          msg.setLongProperty("time", System.currentTimeMillis());
+	          msg.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, washingInfo.getWashingDuration());
+	          msg.setStringProperty("userId", washingInfo.getUserId());
+	          
+	          System.out.println(String.format("%s - %s - %s", 
+	                  msg.getStringProperty("userId"), 
+	                  msg.getStringProperty("machineId"), 
+	                  msg.getLongProperty("time")));
+	          return msg;
+	        }
+	    });
+	    
+	    try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     // For test. TODO: remove this method in production

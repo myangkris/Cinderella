@@ -3,6 +3,9 @@ package com.cinderella.entity;
 import java.sql.Timestamp;
 
 public class WashMachine {
+    public static final int STATUS_AVAILABLE = 0;
+    public static final int STATUS_WASHING = 1;
+    public static final int STATUS_ERROR = 2;
 	// Fields------------------------------------------------
 	private final long id;
 	private int status;

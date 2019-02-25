@@ -1,6 +1,7 @@
 package com.cinderella.entity;
 
 public class User {
+    public static final int DUMMY_USER_ID = 0;
 	
 	private final int id;
 	private final String name;
