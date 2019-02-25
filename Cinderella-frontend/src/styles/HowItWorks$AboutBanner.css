@@ -1,0 +1,33 @@
+.how-it-works-banner{
+    padding: 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.how-it-works-banner img{
+    width: 200px;
+    margin-right: 1rem;
+}
+
+.how-it-works-banner h1{
+    margin: 0;
+}
+
+.about-banner{
+    padding: 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.about-banner img{
+    width: 200px;
+    margin-left: 1rem;
+}
+
+.about-banner h1{
+    margin: 0;
+}
+
