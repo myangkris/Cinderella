@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.cinderella.dao.DBConnection;
 import com.cinderella.entity.Manager;
 import com.cinderella.entity.Manager.ManagerBuilder;
@@ -18,6 +20,7 @@ import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.WashMachine;
 import com.cinderella.entity.WashMachine.WashMachineBuilder;;
 
+@Repository
 public class MySQLConnection implements DBConnection {
 	private Connection conn;
 

@@ -49,7 +49,6 @@ public class WashingServlet extends AbstractAutowiredHttpServlet {
                .withWashingDuration(washingDuration);
         WashingInfo washingInfo = builder.build();
         
-        System.out.println(washingService);
         washingService.process(washingInfo);
     }
 
