@@ -21,13 +21,13 @@ class NormalLoginForm extends React.Component {
                     }
                     throw new Error(response.statusText);
                 }).then((data) => {
-                    message.success('Login Success!');
+                    message.success('Sign In Success!');
                     console.log(data);
-                    //this.props.history.push('/home');
+                    //this.props.history.push('/reserve');
                     //this.props.handleSuccessfulLogin(data);
                 }).catch((e) => {
                     console.log(e);
-                    message.error('Login Failed.');
+                    message.error('Sign In Failed.');
                 });
             }
         });
@@ -41,7 +41,7 @@ class NormalLoginForm extends React.Component {
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email/Phone Number" />
+                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
                     )}
                 </Form.Item>
                 <Form.Item>
@@ -62,13 +62,13 @@ class NormalLoginForm extends React.Component {
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="sign-in-button">
-                        Log In
+                        Sign In
                     </Button>
                     <p>
-                        Don't have an account? Sign up today
+                        Don't have an account? Register today!
                     </p>
                     <Button type="primary" htmlType="submit" className="sign-up-button">
-                        <Link to="/register">Register Now!</Link>
+                        <Link to="/register">Sign Up Now!</Link>
                     </Button>
                 </Form.Item>
             </Form>

@@ -109,6 +109,10 @@
     .footer-connect{
         padding: 1rem 4rem;
     }
+
+    .confirm-holder{
+        grid-template-columns: 1fr;
+    }
 }
 
 @media(max-width: 500px){
@@ -132,4 +136,7 @@
         padding: 0.5rem 1rem;
     }
 
+    .confirm-holder{
+        grid-template-columns: 1fr;
+    }
 }

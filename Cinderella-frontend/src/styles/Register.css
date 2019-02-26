@@ -1,6 +1,6 @@
 .register{
-    padding-top: 30px;
-    width: 500px;
+    padding-top: 2rem;
+    width: 400px;
     margin: auto;
 }
 .register-button{
@@ -8,4 +8,15 @@
 }
 .text{
     text-align:center;
+}
+
+button.ant-btn.register-button.ant-btn-primary{
+    background-color: var(--orange);
+    border: var(--orange);
+    width: 100%;
+    font-weight: 700;
+}
+
+button.ant-btn.register-button.ant-btn-primary:hover{
+    background-color: var(--orangeHover);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, message, Menu } from 'antd';
+import { Form, Input, Button, message, Select } from 'antd';
 import { API_ROOT } from '../constants';
 import { Link } from 'react-router-dom';
 import {Footer} from './Footer';
@@ -7,7 +7,9 @@ import HeaderLogo from "../assets/design_elements/logo 2.png";
 import {HowItWorksBanner} from "./HowItWorksBanner";
 import {HowItWorks} from "./HowItWorks";
 import {AboutBanner} from "./AboutBanner";
-import {MenuBar} from "./MenuBar";
+
+const { Option } = Select;
+
 
 class RegistrationForm extends React.Component {
     state = {
@@ -94,6 +96,15 @@ class RegistrationForm extends React.Component {
             },
         };
 
+        const prefixSelector = getFieldDecorator('prefix', {
+            initialValue: '1',
+        })(
+            <Select style={{ width: 70 }}>
+                <Option value="1">+1</Option>
+                <Option value="86">+86</Option>
+            </Select>
+        );
+
         return (
             <div>
                 <div className="logo-container">
@@ -106,7 +117,7 @@ class RegistrationForm extends React.Component {
                         {...formItemLayout}
                         label="Username"
                     >
-                        {getFieldDecorator('username', {
+                        {getFieldDecorator('Username', {
                             rules: [{ required: true, message: 'Please input your username!' }],
                         })(
                             <Input />
@@ -140,10 +151,31 @@ class RegistrationForm extends React.Component {
                             <Input type="password" onBlur={this.handleConfirmBlur} />
                         )}
                     </Form.Item>
-                    <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit" className="register-button">Register</Button>
-                        <p className="text">Already have account? <Link to = "">Login now!</Link></p>
+                    <Form.Item
+                        {...formItemLayout}
+                        label="Email"
+                    >
+                        {getFieldDecorator('email', {
+                            rules: [{ required: true, message: 'Please input your email!' }],
+                        })(
+                            <Input />
+                        )}
                     </Form.Item>
+                    <Form.Item
+                        {...formItemLayout}
+                        label="Phone Number"
+                    >
+                        {getFieldDecorator('phone', {
+                            rules: [{ required: true, message: 'Please input your phone number!' }],
+                        })(
+                            <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                        )}
+                    </Form.Item>
+                    <Form.Item {...tailFormItemLayout}>
+                        <Button type="primary" htmlType="submit" className="register-button">Sign Up</Button>
+                        <p className="text">Already have account? <Link to = "">Sign in now!</Link></p>
+                    </Form.Item>
+
                     </Form>
                 </div>
                 <header className="Register-header"></header>

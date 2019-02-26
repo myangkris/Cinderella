@@ -6,6 +6,7 @@
 @import "./styles/Header.css";
 @import './styles/MachineStatus.css';
 @import './styles/Register.css';
+@import './styles/Confirm.css';
 
 body {
   margin: 0;

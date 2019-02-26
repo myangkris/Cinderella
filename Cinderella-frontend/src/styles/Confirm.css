@@ -1,0 +1,32 @@
+.confirm-holder{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 2rem;
+}
+
+.confirm-text{
+    padding: 2rem;
+}
+
+.confirm-machine{
+    padding: 2rem;
+    text-align: center;
+}
+
+.location{
+    display: flex;
+    text-align: center;
+}
+
+.location h3{
+    margin-right: 1rem;
+    flex: 1;
+    background-color: var(--lightBlue);
+    color: #ffffff;
+}
+
+.confirm-machine img{
+    width: 150px;
+    padding-bottom: 1rem;
+}
+
