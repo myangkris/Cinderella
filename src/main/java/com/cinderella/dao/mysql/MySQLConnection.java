@@ -675,7 +675,7 @@ public class MySQLConnection implements DBConnection {
 	 * @throws Exception
 	 */
 	@Override
-	public List<WashMachine> getWashMachineList(String address) throws Exception {
+	public List<WashMachine> getWashMachineList(String address) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return null;
