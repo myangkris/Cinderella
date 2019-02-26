@@ -2,18 +2,28 @@ package com.cinderella.entity;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class WashMachine {
     public static final int STATUS_AVAILABLE = 0;
     public static final int STATUS_WASHING = 1;
     public static final int STATUS_ERROR = 2;
 	// Fields------------------------------------------------
+    @JsonProperty
 	private final long id;
+    @JsonProperty
 	private int status;
+    @JsonProperty
 	private float pricePerService;
+    @JsonProperty
 	private int usedBy;
+    @JsonProperty
 	private String location;
+    @JsonProperty
 	private int waitedBy;
+    @JsonProperty
 	private Timestamp startsAt;
+    @JsonProperty
 	private int waitingCapacity;
 	
 	// Constructor------------------------------------------------

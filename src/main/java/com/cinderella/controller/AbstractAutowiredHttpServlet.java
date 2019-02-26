@@ -1,4 +1,4 @@
-package com.cinderella.controller.timing;
+package com.cinderella.controller;
 
 import java.io.IOException;
 

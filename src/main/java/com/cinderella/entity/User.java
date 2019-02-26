@@ -1,14 +1,22 @@
 package com.cinderella.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
     public static final int DUMMY_USER_ID = 0;
-	
+    @JsonProperty
 	private final int id;
+    @JsonProperty
 	private final String name;
+    @JsonProperty
 	private String password;
+    @JsonProperty
 	private double balance;
+    @JsonProperty
 	private long phoneNumber;
+    @JsonProperty
 	private int bonusPoints;
+    @JsonProperty
 	private String email;
 	
 	private User(UserBuilder builder) {

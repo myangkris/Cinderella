@@ -45,4 +45,6 @@
         <property name="destination" ref="washingQueue" />  
         <property name="messageListener" ref="washingCompleteListener" />  
     </bean>
+    
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" lazy-init="false"></bean>
 </beans>
