@@ -17,25 +17,19 @@ const content = (
 
 
 export class MachineStatus extends React.Component {
-    state = {
-        machineID: '',
-        isAvailable: true,
-        isOccupied: false,
-        isMalfunctioned: false,
-    }
 
     getMachineStatus = () => {
-        const {isAvailable, isMalfunctioned, isOccupied } = this.state
-        if (isAvailable) {
+        if (this.props.machineStatus == 'isAvailable') {
             return <Popover placement="top" content={content} arrowPointAtCenter><img src={Available} alt=""/></Popover>
-        } else if (isOccupied) {
+        } else if (this.props.machineStatus == 'isOccupied') {
             return <img src={Occupied} alt=""/>
-        } else if (isMalfunctioned) {
+        } else if (this.props.machineStatus == 'isMalfunctioned') {
             return <img src={Malfunction} alt=""/>
         }
     }
 
     render() {
+
         return(
             <section className="machine-wrapper">
                 {this.getMachineStatus()}

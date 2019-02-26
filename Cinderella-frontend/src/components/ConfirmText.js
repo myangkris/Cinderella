@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button} from 'antd'
+import {Link} from 'react-router-dom'
 
 class ConfirmText extends Component {
     render() {
@@ -13,7 +14,7 @@ class ConfirmText extends Component {
                 </div>
                 <p>Reserving from 10:30 pm, April 3, 2019 to 11:30 pm, April3, 2019</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum cumque libero nobis quidem, tempora unde? Aperiam architecto delectus, deserunt dolore esse harum minima nobis non, odio omnis sapiente velit. Blanditiis corporis cupiditate est et illo laborum maiores minima pariatur porro!</p>
-                <Button>Confirm</Button>
+                <Button><Link to="/track">Confirm</Link></Button>
             </div>
         );
     }
