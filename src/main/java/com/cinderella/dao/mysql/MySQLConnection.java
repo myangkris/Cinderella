@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.cinderella.dao.DBConnection;
 import com.cinderella.entity.Manager;
 import com.cinderella.entity.Manager.ManagerBuilder;
@@ -18,7 +20,7 @@ import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.WashMachine;
 import com.cinderella.entity.WashMachine.WashMachineBuilder;;
 
-
+@Repository
 public class MySQLConnection implements DBConnection {
 	private Connection conn;
 
@@ -64,7 +66,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return User object by query the db using username
 	 *
@@ -85,8 +87,8 @@ public class MySQLConnection implements DBConnection {
 					builder.setUserId(rs.getInt("UserId"));
 					builder.setUserName(rs.getString("username"));
 					builder.setUserPassword(rs.getString("password"));
-					builder.setUserBalance(rs.getInt("balance"));
-					builder.setUserPhoneNumber(rs.getInt("phoneNumber"));
+					builder.setUserBalance(rs.getDouble("balance"));
+					builder.setUserPhoneNumber(rs.getLong("phoneNumber"));
 					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
 					builder.setUserEmail(rs.getString("email"));
 					return builder.build();
@@ -98,11 +100,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return null;
 	}
-	/*
-	sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance INT(9),"
-						+ "phoneNumber INT(11)," + "bonusPoints INT(9)," + "email VARCHAR(255),"
-						+ "PRIMARY KEY (UserId)" + ")";
-	*/
+
 	/**
 	 * Return User object by query the db using userid
 	 *
@@ -123,8 +121,8 @@ public class MySQLConnection implements DBConnection {
 					builder.setUserId(rs.getInt("UserId"));
 					builder.setUserName(rs.getString("username"));
 					builder.setUserPassword(rs.getString("password"));
-					builder.setUserBalance(rs.getInt("balance"));
-					builder.setUserPhoneNumber(rs.getInt("phoneNumber"));
+					builder.setUserBalance(rs.getDouble("balance"));
+					builder.setUserPhoneNumber(rs.getLong("phoneNumber"));
 					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
 					builder.setUserEmail(rs.getString("email"));
 					return builder.build();
@@ -136,7 +134,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return Manager object by query the db using employeeAccountId
 	 *
@@ -154,8 +152,7 @@ public class MySQLConnection implements DBConnection {
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					ManagerBuilder builder = new ManagerBuilder();
-					builder.setEmployeeAccountNumber(EmployeeAccountNumber)
-							.setPassword(rs.getString("password"))
+					builder.setEmployeeAccountNumber(EmployeeAccountNumber).setPassword(rs.getString("password"))
 							.setAccessPreviledge(rs.getInt("accessPreviledge"));
 					return builder.build();
 				}
@@ -166,7 +163,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return Site object by query the db using address
 	 *
@@ -184,8 +181,7 @@ public class MySQLConnection implements DBConnection {
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					SiteBuilder builder = new SiteBuilder();
-					builder.setAddress(address)
-							.setOperatingHours(rs.getInt("OperatingHours"));
+					builder.setAddress(address).setOperatingHours(rs.getInt("OperatingHours"));
 					return builder.build();
 				}
 			} catch (SQLException e) {
@@ -195,7 +191,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return WashMachine object by query the db using machineId
 	 *
@@ -230,9 +226,9 @@ public class MySQLConnection implements DBConnection {
 			}
 		}
 		return null;
-		
+
 	}
-		
+
 	/**
 	 * Return success or not by connecting the db to update the user
 	 *
@@ -243,18 +239,85 @@ public class MySQLConnection implements DBConnection {
 	@Override
 	public boolean addOrUpdateUser(User user) {
 		// TODO Auto-generated method stub
-		return false;
+		return updateUser(user) || addUser(user);
 	}
-	
+
 	@Override
 	public boolean addUser(User user) {
 		// TODO Auto-generated method stub
+		if (conn != null && user != null) {		
+			String sql = "INSERT IGNORE INTO user("
+					+ "UserId,"
+					+ "username,"
+					+ "password,"
+					+ "balance,"
+					+ "phoneNumber,"
+					+ "bonusPoints,"
+					+ "email) VALUES(?, ?, ?, ?, ?, ?, ?)";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, user.getId());
+				stmt.setString(2, user.getName());
+				stmt.setString(3, user.getPassword());
+				stmt.setDouble(4, user.getBalance());
+				stmt.setLong(5, user.getPhoneNumber());
+				stmt.setInt(6, user.getBonusPoints());
+				stmt.setString(7, user.getEmail());
+				String userIdString = Integer.toString(user.getId());
+				if (stmt.executeUpdate() == 1) {
+					System.out.println("User " + userIdString + " successfully added");
+					return true;
+				} else {
+					System.out.println("User " + userIdString + " already exists. User addition exited.");
+					return false;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return false;
 	}
+	/*
+	 * sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL auto_increment," +
+	 * "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," +
+	 * "balance DECIMAL(10,2)," + "phoneNumber DECIMAL(11, 0)," +
+	 * "bonusPoints INT(8)," + "email VARCHAR(255)," + "PRIMARY KEY (UserId)" + ")";
+	 */
 
 	@Override
 	public boolean updateUser(User user) {
 		// TODO Auto-generated method stub
+		if (conn != null && user != null) {
+			String sql = "UPDATE user SET "
+					+ "username = ?,"
+					+ "password = ?,"
+					+ "balance = ?,"
+					+ "phoneNumber = ?,"
+					+ "bonusPoints = ?,"
+					+ "email = ? WHERE UserId = ?";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, user.getName());
+				stmt.setString(2, user.getPassword());
+				stmt.setDouble(3, user.getBalance());
+				stmt.setLong(4, user.getPhoneNumber());
+				stmt.setInt(5, user.getBonusPoints());
+				stmt.setString(6, user.getEmail());
+				stmt.setInt(7, user.getId());
+				String userIdString = Integer.toString(user.getId());
+				if (stmt.executeUpdate() == 1) {
+					System.out.println("User " + userIdString + " successfully updated.");
+					return true;
+				} else {
+					System.out.println("User " + userIdString + " doesn't exist. Update exited.");
+					return false;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return false;
 	}
 
@@ -282,7 +345,7 @@ public class MySQLConnection implements DBConnection {
 			return addWashMachine(washMachine);
 		}
 	}
-	
+
 	@Override
 	public boolean addWashMachine(WashMachine washMachine) {
 		if (conn == null) {
@@ -387,7 +450,7 @@ public class MySQLConnection implements DBConnection {
 		System.out.println(res);
 		return res != 0;
 	}
-	
+
 	private int addSite(Site site) {
 		String sql = "INSERT INTO site VALUES (?, ?)";
 		try {
@@ -402,7 +465,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return 0;
 	}
-	
+
 	private int updateSite(Site site) {
 		String sql = "UPDATE site SET OperatingHours = ? WHERE Address = ?";
 		try {
@@ -439,7 +502,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return res != 0;
 	}
-	
+
 	private int addManager(Manager manager) {
 		String sql = "INSERT INTO manager VALUES (?, ?, ?)";
 		try {
@@ -455,7 +518,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return 0;
 	}
-	
+
 	private int updateManager(Manager manager) {
 		String sql = "UPDATE manager SET password = ?, accessPreviledge = ? WHERE EmployeeAccountNumber = ?";
 		try {
@@ -483,16 +546,41 @@ public class MySQLConnection implements DBConnection {
 	 */
 	@Override
 	public void deleteUserById(int userid, boolean onCascade) throws Exception {
-
+		if (conn == null) {
+			throw new SQLException("No DB connection. User deletion Failure.");
+		}
+		if (onCascade) {
+			throw new Exception("Not supported yet. Please delete user in a correct order.");
+		}
+		String sql = "DELETE FROM user WHERE UserId = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, userid);
+		String userIdString = Integer.toString(userid);
+		if (stmt.executeUpdate() == 0) {
+			sql = "SELECT UserId FROM user WHERE UserId = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, userid);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				throw new SQLException("Deletion Failure. User " + userIdString + " still exists.");
+			} else {
+				System.out.println("User " + userIdString + " doesn't exist. User deletion exited.");
+			}
+		} else {
+			System.out.println("User " + userIdString + " successfully deleted.");
+		}
 	}
 
 	/**
-	 * delete a row of wash machine by connecting the db to find it first and then delete it if exists.
-	 * if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this case.
-	 * Throws fail to delete exceptions if there is some dependency such as foreign key issue happened and causing the deletion failed.
+	 * delete a row of wash machine by connecting the db to find it first and then
+	 * delete it if exists. if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!!
+	 * in this case. Throws fail to delete exceptions if there is some dependency
+	 * such as foreign key issue happened and causing the deletion failed.
 	 *
 	 * @param machineId
-	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
+	 * @param onCascade if set to be true, foreign key will be delete on cascade to
+	 *                  meet the constrain. If set to be false, don't delete on
+	 *                  cascade.
 	 * @throws Exception if delete failed.
 	 */
 	@Override
@@ -523,12 +611,15 @@ public class MySQLConnection implements DBConnection {
 	}
 
 	/**
-	 * delete a row of site by connecting the db to find it first and then delete it if exists.
-	 * if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this case.
-	 * Throws fail to delete exceptions if there is some dependency such as foreign key issue happened and causing the deletion failed.
+	 * delete a row of site by connecting the db to find it first and then delete it
+	 * if exists. if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this
+	 * case. Throws fail to delete exceptions if there is some dependency such as
+	 * foreign key issue happened and causing the deletion failed.
 	 *
 	 * @param address
-	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
+	 * @param onCascade if set to be true, foreign key will be delete on cascade to
+	 *                  meet the constrain. If set to be false, don't delete on
+	 *                  cascade.
 	 * @throws Exception if delete failed.
 	 */
 	@Override
@@ -540,19 +631,22 @@ public class MySQLConnection implements DBConnection {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, address);
 			boolean res = ps.execute();
-			if (!res) {
+			if (res) {
 				System.out.println("delete site by address might fail.");
 			}
 		}
 	}
 
 	/**
-	 * delete a row of manager by connecting the db to find it first and then delete it if exists.
-	 * if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this case.
-	 * Throws fail to delete exceptions if there is some dependency such as foreign key issue happened and causing the deletion failed.
+	 * delete a row of manager by connecting the db to find it first and then delete
+	 * it if exists. if not exists, do nothing!!! DO NOT THROW EXCEPTIONS!!! in this
+	 * case. Throws fail to delete exceptions if there is some dependency such as
+	 * foreign key issue happened and causing the deletion failed.
 	 *
 	 * @param employeeAccountId
-	 * @param onCascade if set to be true, foreign key will be delete on cascade to meet the constrain. If set to be false, don't delete on cascade.
+	 * @param onCascade         if set to be true, foreign key will be delete on
+	 *                          cascade to meet the constrain. If set to be false,
+	 *                          don't delete on cascade.
 	 * @throws Exception if delete failed.
 	 */
 	@Override
@@ -564,23 +658,24 @@ public class MySQLConnection implements DBConnection {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, employeeAccountNumber);
 			boolean res = ps.execute();
-			if (!res) {
-				System.out.println("delete manager by EmployeeAccountNumber might fail.");
+			if (res) {
+				System.out.println(
+						"delete manager by EmployeeAccountNumber might fail due to none such employeeAccountNumber in db.");
 			}
 		}
 	}
 
 	/**
-	 * Get all the washing machines of the address.
-	 * Go through the washmachine table and get all the rows WHERE locatedAt = address.
-	 * If connection failed, return null. If no machines found, return empty list.
+	 * Get all the washing machines of the address. Go through the washmachine table
+	 * and get all the rows WHERE locatedAt = address. If connection failed, return
+	 * null. If no machines found, return empty list.
 	 * 
 	 * @param address
 	 * @return List<WashMachine>
 	 * @throws Exception
 	 */
 	@Override
-	public List<WashMachine> getWashMachineList(String address) throws Exception {
+	public List<WashMachine> getWashMachineList(String address) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return null;
@@ -612,4 +707,3 @@ public class MySQLConnection implements DBConnection {
 	}
 
 }
-

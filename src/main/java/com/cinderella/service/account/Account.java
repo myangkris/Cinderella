@@ -23,8 +23,9 @@ public abstract class Account {
 	public static boolean register(User user) {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		if (connection.findUserByUsername(user.getName()) == null) {
-			boolean registered = connection.updateUser(user);
+			boolean registered = connection.addUser(user);
 			connection.close();
+			System.out.println("add already done");
 			return registered;
 		} 
 		return false;

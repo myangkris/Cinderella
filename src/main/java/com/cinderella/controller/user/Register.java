@@ -1,6 +1,8 @@
 package com.cinderella.controller.user;
 
 import java.io.IOException;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,31 +42,39 @@ public class Register extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("deprecation")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
 			
-			String userName = input.getString("userName");
+			String userName = input.getString("name");
 			String password = input.getString("password");
 			String emailAddress = input.getString("email");
 			String phoneNumber = input.getString("phoneNumber");
 			UserBuilder builder = new UserBuilder();
+			Date date = new Date();
 			builder.setUserName(userName);
 			builder.setUserPassword(password);
 			builder.setUserBalance(100);
 			builder.setUserPhoneNumber(StringToInt.toNumber(phoneNumber));
 			builder.setUserBonusPoints(0);
 			builder.setUserEmail(emailAddress);
+			builder.setUserId(date.getSeconds()*60*24*31*12*300 + 
+					date.getMinutes()*24*31*12*300 + 
+					date.getHours()*31*12*300 + 
+					date.getDate()*12*300 + 
+					date.getMonth()*300 + 
+					date.getYear());
 			User user = builder.build();
 			
 
 			
 			JSONObject obj = new JSONObject();
 			if (Account.register(user)) {
-				HttpSession session = request.getSession(); // this session ID will attach to response
-				session.setAttribute("userName", userName);
-				session.setMaxInactiveInterval(600);
+//				HttpSession session = request.getSession(); // this session ID will attach to response
+//				session.setAttribute("userName", userName);
+//				session.setMaxInactiveInterval(600);
 				obj.put("status", "OK");
 			} else {
 				response.setStatus(401);

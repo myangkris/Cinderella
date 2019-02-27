@@ -4,7 +4,7 @@ package com.cinderella.service.account;
 public interface Transaction {
 
 
-	public int checkBalance();
+	public double checkBalance();
 	/**
 	 * Return whether the credential is correct. (This is not needed for main
 	 * course, just for demo and extension)

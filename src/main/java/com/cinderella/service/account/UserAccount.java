@@ -33,7 +33,7 @@ public class UserAccount extends Account implements Transaction{
 	}
 	
 	@Override
-	public int checkBalance() {
+	public double checkBalance() {
 		// TODO Auto-generated method stub
 		return user.getBalance();
 	}
@@ -96,8 +96,8 @@ public class UserAccount extends Account implements Transaction{
 					try {
 						obj.put("name", user.getName());
 						obj.put("balance", user.getBalance());
-						obj.put("phone_number", user.getPhoneNumber());
-						obj.put("bonus_point", user.getBonusPoints());
+						obj.put("phoneNumber", user.getPhoneNumber());
+						obj.put("bonusPoints", user.getBonusPoints());
 						obj.put("email", user.getEmail());
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -114,11 +114,12 @@ public class UserAccount extends Account implements Transaction{
 		JSONArray array = new JSONArray();
 		for(WashMachine washmachine : list) {
 			JSONObject obj = new JSONObject();
+			Float price = washmachine.getPricePerService();
 //`MachineID`, `status`, `pricePerService`, `UsedBy`, `locatedAt`, `WaitedBy`, `startsAt`, `waitingCapacity`
 			try {
 				obj.put("MachineID", washmachine.getId());
 				obj.put("status", washmachine.getStatus());
-				obj.put("pricePerService", washmachine.getPricePerService());
+				obj.put("pricePerService", price.toString());
 				obj.put("UsedBy", washmachine.getUsedBy());
 				obj.put("locatedAt", washmachine.getLocation());
 				obj.put("WaitedBy", washmachine.getWaitedBy());

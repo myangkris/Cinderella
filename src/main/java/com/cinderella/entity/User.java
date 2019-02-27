@@ -1,13 +1,22 @@
 package com.cinderella.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
-	
-	private int id;
-	private String name;
+    public static final int DUMMY_USER_ID = 0;
+    @JsonProperty
+	private final int id;
+    @JsonProperty
+	private final String name;
+    @JsonProperty
 	private String password;
-	private int balance;
-	private int phoneNumber;
+    @JsonProperty
+	private double balance;
+    @JsonProperty
+	private long phoneNumber;
+    @JsonProperty
 	private int bonusPoints;
+    @JsonProperty
 	private String email;
 	
 	private User(UserBuilder builder) {
@@ -24,8 +33,8 @@ public class User {
 		private int userId;
 		private String userName;
 		private String userPassword;
-		private int userBalance;
-		private int userPhoneNumber;
+		private double userBalance;
+		private long userPhoneNumber;
 		private int userBonusPoints;
 		private String userEmail;
 		
@@ -48,12 +57,12 @@ public class User {
 			return this;
 		}
 		
-		public UserBuilder setUserBalance(int userBalance) {
+		public UserBuilder setUserBalance(double userBalance) {
 			this.userBalance = userBalance;
 			return this;
 		}
 		
-		public UserBuilder setUserPhoneNumber(int userPhoneNumber) {
+		public UserBuilder setUserPhoneNumber(long userPhoneNumber) {
 			this.userPhoneNumber = userPhoneNumber;
 			return this;
 		}
@@ -73,19 +82,9 @@ public class User {
 	public int getId() {
 		return id;
 	}
-	
-	public User setId(int id) {
-		this.id = id;
-		return this;
-	}
-	
+		
 	public String getName() {
 		return name;
-	}
-	
-	public User setName(String name) {
-		this.name = name;
-		return this;
 	}
 	
 	public String getPassword() {
@@ -97,20 +96,20 @@ public class User {
 		return this;
 	}
 	
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 	
-	public User setBalance(int balance) {
+	public User setBalance(double balance) {
 		this.balance = balance;
 		return this;
 	}
 	
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 	
-	public User setPhoneNumber(int phoneNumber) {
+	public User setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		return this;
 	}

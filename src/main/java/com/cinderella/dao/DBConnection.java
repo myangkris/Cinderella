@@ -188,6 +188,7 @@ public interface DBConnection {
 	/**
 	 * Get all the washing machines of the address.
 	 * Go through the washmachine table and get all the rows WHERE locatedAt = address
+	 * For example, the testing address is "1234 Center Dr".
 	 * 
 	 * @param address
 	 * @return List<WashMachine>
