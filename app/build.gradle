@@ -4,17 +4,28 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.yunhaoguo.cinderella"
-        minSdkVersion 23
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders= [
+                JPUSH_PKGNAME:applicationId,
+                JPUSH_APPKEY:"b8c3ed289440f0ffd0d9eae3",//JPush上注册的包名对应的appkey（*换成你的*）
+                JPUSH_CHANNEL:"developer-default",//暂时填写默认值即可.]
+        ]
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+
     }
 }
 
@@ -30,4 +41,8 @@ dependencies {
     //push service
     implementation 'cn.jiguang.sdk:jpush:3.1.6'
     implementation 'cn.jiguang.sdk:jcore:1.2.5'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
 }

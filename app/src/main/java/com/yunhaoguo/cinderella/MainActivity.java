@@ -1,7 +1,6 @@
 package com.yunhaoguo.cinderella;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +10,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.yunhaoguo.cinderella.adapter.MachinesAdapter;
+import com.yunhaoguo.cinderella.common.BasicActivity;
+import com.yunhaoguo.cinderella.entity.Machine;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cn.jpush.android.api.JPushInterface;
+public class MainActivity extends BasicActivity {
 
-public class MainActivity extends AppCompatActivity {
+    private List<Machine> machines = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-        setPushService();
-
     }
 
-    private void setPushService() {
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(getApplicationContext());
-    }
+
 
     private void initView() {
         RecyclerView rvMachines = findViewById(R.id.rv_machines);
         rvMachines.setLayoutManager(new GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false));
+
         List<Machine> machines = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             Machine machine = new Machine();
-            machine.state = new Random().nextInt(3);
+            machine.setState(new Random().nextInt(3));
             machines.add(machine);
         }
+
         rvMachines.setAdapter(new MachinesAdapter(this, machines));
     }
 
@@ -77,15 +77,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        JPushInterface.onResume(this);
+    public MainContract.Presenter getPresenter() {
+        return new MainPresenter();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        JPushInterface.onPause(this);
+    public void getMachineStates(List<Machine> machines) {
+        this.machines = machines;
     }
-
 }

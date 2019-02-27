@@ -1,4 +1,4 @@
-package com.yunhaoguo.cinderella;
+package com.yunhaoguo.cinderella.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.yunhaoguo.cinderella.R;
+import com.yunhaoguo.cinderella.entity.Machine;
 
 import java.util.List;
 
@@ -40,7 +43,7 @@ public class MachinesAdapter extends RecyclerView.Adapter<MachinesAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        switch (machines.get(i).state) {
+        switch (machines.get(i).getState()) {
             case 0:
                 viewHolder.ivMachine.setImageResource(R.drawable.machine_available);
                 break;
