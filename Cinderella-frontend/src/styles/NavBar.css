@@ -24,3 +24,14 @@
     color: var(--darkBlueHover);
     background-color: var(--orangeHover);
 }
+
+.menu-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.menu-container a{
+    color: #fff;
+    margin: auto 0;
+}
