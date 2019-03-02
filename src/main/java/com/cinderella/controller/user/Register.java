@@ -19,7 +19,7 @@ import com.cinderella.service.account.Account;
 /**
  * Servlet implementation class Register
  */
-@WebServlet("/Register")
+@WebServlet("/register")
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

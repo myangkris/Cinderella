@@ -7,10 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.cinderella.service.account.UserAccount;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+
 /**
  * Servlet implementation class Pay
  */
-@WebServlet("/Pay")
+@WebServlet("/pay")
 public class Pay extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,9 +34,26 @@ public class Pay extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		try {
+			
+			JSONObject input = RpcHelper.readJSONObject(request);		
+			String userName = input.getString("name");
+			JSONObject obj = new JSONObject();
+			UserAccount account = new UserAccount(userName);
+			if (account.pay()) {		
+ 				Double balance = account.checkBalance();
+				obj.put("status", "OK").put("balance" , balance.toString());
+			} else {
+				response.setStatus(403);
+				obj.put("status", "Pay fail");
+			}
+			RpcHelper.writeJsonObject(response, obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

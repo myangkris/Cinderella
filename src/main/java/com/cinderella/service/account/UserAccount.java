@@ -28,6 +28,10 @@ public class UserAccount extends Account implements Transaction{
 		return connection.findUserByUsername(userName);
 	} 
 	
+	public void close() {
+		connection.close();
+	}
+	
 	public boolean report (String error) {
 		return false;
 	}
@@ -42,15 +46,8 @@ public class UserAccount extends Account implements Transaction{
 	public boolean pay() {
 		// TODO Auto-generated method stub
 		if (user.getBalance() >= 2) {
-			UserBuilder builder = new UserBuilder();
-			builder.setUserId(user.getId());
-			builder.setUserName(user.getName());
-			builder.setUserPassword(user.getPassword());
-			builder.setUserBalance(user.getBalance() - 2);
-			builder.setUserPhoneNumber(user.getPhoneNumber());
-			builder.setUserBonusPoints(user.getBonusPoints());
-			builder.setUserEmail(user.getEmail());
-			return connection.updateUser(builder.build());
+			user.setBalance(user.getBalance() - 2);
+			return connection.updateUser(user);
 		}
 		return false;
 	}

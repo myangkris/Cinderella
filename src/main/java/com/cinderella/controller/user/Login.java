@@ -55,12 +55,16 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		String jwt = request.getHeader("Authorization");
 		String scope = "";
+		String userName = "";
 		try {
 //			Jws<Claims> claims = Jwts.parser()
 //			  .setSigningKey("this is my custom Secret key for authnetication".getBytes("UTF-8"))
 //			  .parseClaimsJws(jwt);
-			scope = (String)Jwts.parser().setSigningKey(
-				    "this is my custom Secret key for authnetication".getBytes("UTF-8")).parseClaimsJws(jwt).getBody().get("scope");
+			Jws<Claims> claims = Jwts.parser().setSigningKey(
+				    "this is my custom Secret key for authnetication".getBytes("UTF-8")).parseClaimsJws(jwt);
+			scope = (String)claims.getBody().get("scope");
+			userName = (String)claims.getBody().get("name");
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -73,10 +77,14 @@ public class Login extends HttpServlet {
 //			HttpSession session = request.getSession(false);
 			JSONObject obj = new JSONObject();
 			
-			if (scope.equals("this is my custom Secret key for authnetication")) {
-				
+			if (scope.equals("this is my custom Secret key for authnetication")) {		
 //				String userId = session.getAttribute("user_id").toString();
-				obj.put("status", "OK");
+				UserAccount account = new UserAccount(userName);
+				JSONArray array = account.checkMachineList();
+				JSONObject user = account.getProfile();
+				account.close();
+				obj.put("status", "OK").put("userInfo" , user).put("machineList" , array).put("Authorization", jwt);
+	
 			} else {
 				response.setStatus(403);
 				obj.put("status", "Invalid Token");
@@ -117,7 +125,8 @@ public class Login extends HttpServlet {
 				UserAccount account = new UserAccount(userName);
 				JSONArray array = account.checkMachineList();
 				JSONObject user = account.getProfile();
-				obj.put("status", "OK").put("user_info" , user).put("machine_list" , array).put("Authorization", jwt);
+				account.close();
+				obj.put("status", "OK").put("userInfo" , user).put("machineList" , array).put("Authorization", jwt);
 			} else {
 				response.setStatus(401);
 				obj.put("status", "User Doesn't Exist");
