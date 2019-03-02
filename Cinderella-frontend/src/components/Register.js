@@ -26,8 +26,10 @@ class RegistrationForm extends React.Component {
                 fetch(`${API_ROOT}/signup`, {
                     method: 'POST',
                     body: JSON.stringify({
-                        username: values.username,
+                        name: values.username,
                         password: values.password,
+                        email: values.email,
+                        phoneNumber: values.phone,
                     }),
                 }).then((response) => {
                     if (response.ok) {
@@ -38,7 +40,7 @@ class RegistrationForm extends React.Component {
                     .then((data) => {
                         console.log(data);
                         message.success('Registration Succeed!');
-                        this.props.history.push('/');
+                        this.props.history.push('/login');
                     })
                     .catch((e) => {
                         console.log(e);
@@ -110,14 +112,14 @@ class RegistrationForm extends React.Component {
                 <div className="logo-container">
                     <img src={HeaderLogo} alt=""/>
                 </div>
-                <header class="Register-header"></header>
+                <header className="Register-header"></header>
                 <div className="register">
                     <Form onSubmit={this.handleSubmit}>
                     <Form.Item
                         {...formItemLayout}
                         label="Username"
                     >
-                        {getFieldDecorator('Username', {
+                        {getFieldDecorator('username', {
                             rules: [{ required: true, message: 'Please input your username!' }],
                         })(
                             <Input />

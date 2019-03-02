@@ -12,7 +12,7 @@ const popover = {
 }
 
 const content = (
-        <Button style={popover}><Link to="/confirm">Reserve me!</Link></Button>
+        <Button style={popover}>Reserve me!</Button>
 );
 
 
@@ -26,6 +26,10 @@ export class MachineStatus extends React.Component {
         } else if (this.props.machineStatus === 2) {
             return <img src={Malfunction} alt=""/>
         }
+    }
+
+    handleClick() {
+        console.log(this.props.machinId)
     }
 
     render() {

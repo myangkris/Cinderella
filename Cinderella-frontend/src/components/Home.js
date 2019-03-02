@@ -10,7 +10,6 @@ export class Home extends React.Component {
         return(
             <div className="wrapper">
                 <TopContainer handleSuccessfulLogin={this.props.handleSuccessfulLogin}/>
-                {/*<NavBar/>*/}
                 <HowItWorksBanner/>
                 <HowItWorks/>
                 <AboutBanner/>

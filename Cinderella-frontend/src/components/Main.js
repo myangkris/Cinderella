@@ -20,6 +20,10 @@ export class Main extends React.Component{
         return this.props.isLoggedIn ? <Reserve handleLogout={this.props.handleLogout}/> : <Redirect to="/home"/>
     }
 
+    getConfirm = () => {
+        return <Confirm />
+    }
+
     render() {
         return(
             <div>
