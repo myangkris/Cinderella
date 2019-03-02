@@ -1,0 +1,36 @@
+.status-wrapper{
+    display: grid;
+    grid-gap: 20px 20px;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    padding: 2rem 5rem;
+}
+
+.status-wrapper img{
+    width: 110px;
+}
+
+.machine-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.ant-popover-inner-content{
+    padding: 0;
+}
+
+.legend-icon img{
+    height: 20px;
+}
+
+.legend-icon{
+    display: flex;
+    padding: 0 6rem;
+    margin-top: 2rem;
+}
+
+.legend-icon p{
+    padding-left: 0.2rem;
+    padding-right: 1rem;
+    font-weight: bold;
+}

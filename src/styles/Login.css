@@ -1,0 +1,51 @@
+:global(.ant-checkbox-wrapper span){
+    color: #fff;
+}
+
+button.ant-btn.sign-in-button.ant-btn-primary{
+    background-color: var(--lightBlue);
+    border: var(--lightBlue);
+    width: 100%;
+    font-weight: 700;
+}
+
+button.ant-btn.sign-in-button.ant-btn-primary:hover{
+    background-color: var(--lightBlueHover);
+}
+
+button.ant-btn.sign-up-button.ant-btn-primary{
+    background-color: var(--orange);
+    border: var(--orange);
+    width: 100%;
+    font-weight: 700;
+}
+
+button.ant-btn.sign-up-button.ant-btn-primary:hover{
+    background-color: var(--orangeHover);
+}
+
+.sign-in-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    padding: 3rem;
+    background-image: url("../assets/design_elements/login - bg image.png");
+}
+
+.sign-in-box h1{
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 1rem;
+}
+
+.sign-in-box img{
+    width: 290px;
+}
+
+.sign-in-box p{
+    color: #fff;
+    margin: auto;
+}
+
+
