@@ -17,7 +17,11 @@ export class Main extends React.Component{
     }
 
     getReserve = () => {
-        return this.props.isLoggedIn ? <Reserve handleLogout={this.props.handleLogout}/> : <Redirect to="/home"/>
+        console.log("MAIN user_info: " + this.props.user_info)
+        console.log("MAIN machine_list: " + this.props.machineStatus)
+        return this.props.isLoggedIn ? <Reserve handleLogout={this.props.handleLogout}
+                                                user_info={this.props.user_info}
+                                                machineStatus={this.props.machineStatus}/> : <Redirect to="/home"/>
     }
 
     render() {

@@ -15,14 +15,10 @@ class NormalLoginForm extends React.Component {
                         username: values.username,
                         password: values.password,
                     }),
-                }).then((response) => {
-                    if (response.ok) {
-                        return response.text();
-                    }
-                    throw new Error(response.statusText);
-                }).then((data) => {
+                }).then(res => res.json()).then((data) => {
                     message.success('Sign In Success!');
                     console.log(data);
+                    //console.log("Machine List: \n" + data.json().machine_list)
                     //this.props.history.push('/reserve');
                     this.props.handleSuccessfulLogin(data)
                 }).catch((e) => {
