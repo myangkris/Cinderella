@@ -41,7 +41,7 @@ class ConfirmText extends Component {
             body: JSON.stringify({
                 washingDuration: 50000,
                 userId: 222,
-                machineId: 233,
+                machineId: this.props.location.query.machineID,
             }),
         })
             .then((resp) => {

@@ -9,7 +9,9 @@ import Malfunction from '../assets/design_elements/machine - fixing.png'
 export class Reserve extends React.Component {
 
     state = {
-        machineStatus: []
+        machineStatus: [],
+        id: [],
+        userId: [],
     }
 
     componentDidMount ()  {
@@ -21,6 +23,8 @@ export class Reserve extends React.Component {
                 console.log(data)
                 this.setState({
                     machineStatus: data,
+                    id: data,
+                    userId: data,
                 })
                 console.log("machineStatus STATE IN SetState: " + this.state.machineStatus)
             })
@@ -32,7 +36,7 @@ export class Reserve extends React.Component {
         // console.log("machineStatus PROPS IN RESERVE: " + this.props.machineStatus)
         console.log("machineStatus STATE IN RESERVE: " + this.state.machineStatus)
         const machines = this.state.machineStatus.map(machine =>
-            <MachineStatus key={machine.MachineID} machineID={machine.MachineID}
+            <MachineStatus key={machine.MachineID} machineID={machine.id}
                            machineStatus={machine.status}/>)
 
         return(

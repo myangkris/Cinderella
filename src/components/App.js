@@ -14,7 +14,7 @@ class App extends Component {
 
   handleSuccessfulLogin = (data) => {
     localStorage.setItem(TOKEN_KEY, data['Authorization']);
-    localStorage.setItem("user_info", data['user_info']);
+    localStorage.setItem("user_info", JSON.stringify(data['user_info']));
     localStorage.setItem("machine_list", data['machine_list']);
     console.log(data['machine_list'])
     console.log(localStorage.getItem(TOKEN_KEY))
