@@ -8,12 +8,30 @@ import Malfunction from '../assets/design_elements/machine - fixing.png'
 
 export class Reserve extends React.Component {
 
+    state = {
+        machineStatus: []
+    }
+
+    componentDidMount ()  {
+        fetch(`http://localhost:8080/Cinderella/allWashMachines`, {
+            method: 'POST',
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                this.setState({
+                    machineStatus: data,
+                })
+                console.log("machineStatus STATE IN SetState: " + this.state.machineStatus)
+            })
+
+    }
+
     render() {
-        console.log("user_info PROPS IN RESERVE: " + this.props.user_info)
-        console.log("machineStatus PROPS IN RESERVE: " + this.props.machineStatus)
-        let machineStatus = [...this.props.machineStatus]
-        console.log("LET MACHINE STATUS: " + machineStatus)
-        const machines = machineStatus.map(machine =>
+        // console.log("user_info PROPS IN RESERVE: " + this.props.user_info)
+        // console.log("machineStatus PROPS IN RESERVE: " + this.props.machineStatus)
+        console.log("machineStatus STATE IN RESERVE: " + this.state.machineStatus)
+        const machines = this.state.machineStatus.map(machine =>
             <MachineStatus key={machine.MachineID} machineID={machine.MachineID}
                            machineStatus={machine.status}/>)
 
@@ -21,9 +39,9 @@ export class Reserve extends React.Component {
             <div>
                 <Header handleLogout={this.props.handleLogout}/>
                 <div className="legend-icon">
-                    <img src={Available} alt=""/><p>Available</p>
-                    <img src={Occupied} alt=""/><p>In use</p>
-                    <img src={Malfunction} alt=""/><p>Cinderella is fixing it!</p>
+                    < img src={Available} alt=""/><p>Available</p >
+                    < img src={Occupied} alt=""/><p>In use</p >
+                    < img src={Malfunction} alt=""/><p>Cinderella is fixing it!</p >
                 </div>
                 <section className="status-wrapper">
                     {machines}
