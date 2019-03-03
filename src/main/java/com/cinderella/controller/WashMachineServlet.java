@@ -44,7 +44,11 @@ public class WashMachineServlet extends AbstractAutowiredHttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<WashMachine> machines = washMachineService.listAllMachines();
+	    System.out.println("Servlet called");
+	    response.setContentType("application/json");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Credential", "true");
+	    List<WashMachine> machines = washMachineService.listAllMachines();
 		JSONArray array = new JSONArray();
 		for (WashMachine machine : machines) {
             String jsonString = objectMapper.writeValueAsString(machine);
@@ -52,6 +56,7 @@ public class WashMachineServlet extends AbstractAutowiredHttpServlet {
             array.put(object);
         }
 		WebPrinter.printJSONArray(response, array);
+		//RpcHelper.writeJsonObject(response, array);
 	}
 
 	/**

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,9 +40,18 @@ public class WashingServlet extends AbstractAutowiredHttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userId = request.getParameter("userId");
+ System.out.println("Washing called !!!");
+        /*String userId = request.getParameter("userId");
         String machineId = request.getParameter("machineId");
-        long washingDuration = Long.parseLong(request.getParameter("washingDuration"));
+ System.out.println(userId);
+ System.out.println(machineId);
+ System.out.println(request.getParameter("washingDuration"));
+        long washingDuration = Long.parseLong(request.getParameter("washingDuration"));*/
+ 
+        JSONObject input = RpcHelper.readJSONObject(request);
+        String userId = input.getInt("userId") + "";
+        String machineId = input.getInt("machineId") + "";
+        long washingDuration = input.getInt("washingDuration");
         
         WashingInfoBuilder builder = new WashingInfoBuilder();
         builder.withUserId(userId)
