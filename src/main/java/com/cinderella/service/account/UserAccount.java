@@ -5,10 +5,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import com.cinderella.dao.DBConnection;
 import com.cinderella.dao.DBConnectionFactory;
-import com.cinderella.dao.mysql.MySQLConnection;
 import com.cinderella.entity.User;
 import com.cinderella.entity.WashMachine;
 import com.cinderella.entity.User.UserBuilder;
@@ -19,14 +19,23 @@ public class UserAccount extends Account implements Transaction{
 	private User user;
 	DBConnection connection;
 	
-	public UserAccount(String userName) {
+	/*public UserAccount(String userId) {
 		this.connection = DBConnectionFactory.getConnection();
-		this.user = getUser(userName);
+		this.user = getUser(userId);
 	}
 	
-	private User getUser(String userName) {
-		return connection.findUserByUsername(userName);
-	} 
+	private User getUser(String userId) {
+		return connection.findUserByUserId(Integer.parseInt(userId));
+	} */
+	
+	public UserAccount(String username) {
+        this.connection = DBConnectionFactory.getConnection();
+        this.user = getUser(username);
+    }
+    
+    private User getUser(String username) {
+        return connection.findUserByUsername(username);
+    } 
 	
 	public boolean report (String error) {
 		return false;

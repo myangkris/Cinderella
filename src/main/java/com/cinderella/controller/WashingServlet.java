@@ -12,8 +12,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cinderella.dao.DBConnection;
 import com.cinderella.dto.WashingInfo;
 import com.cinderella.dto.WashingInfo.WashingInfoBuilder;
+import com.cinderella.entity.User;
 import com.cinderella.service.timing.WashingService;
 
 /**
@@ -26,6 +28,9 @@ public class WashingServlet extends AbstractAutowiredHttpServlet {
     
     @Autowired
     private WashingService washingService;
+    
+    @Autowired
+    private DBConnection connection;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -53,8 +58,11 @@ public class WashingServlet extends AbstractAutowiredHttpServlet {
         String machineId = input.getInt("machineId") + "";
         long washingDuration = input.getInt("washingDuration");
         
+        User user = connection.findUserByUserId(Integer.parseInt(userId));
+        
         WashingInfoBuilder builder = new WashingInfoBuilder();
         builder.withUserId(userId)
+               .withUsername(user.getName())
                .withMachineId(machineId)
                .withWashingDuration(washingDuration);
         WashingInfo washingInfo = builder.build();
