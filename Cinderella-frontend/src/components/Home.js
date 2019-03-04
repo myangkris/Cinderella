@@ -1,6 +1,5 @@
 import React from 'react'
 import {TopContainer} from './TopContainer'
-import {NavBar} from './NavBar'
 import {HowItWorks} from './HowItWorks'
 import {HowItWorksBanner} from './HowItWorksBanner'
 import {AboutBanner} from './AboutBanner'
@@ -10,8 +9,7 @@ export class Home extends React.Component {
     render() {
         return(
             <div className="wrapper">
-                <TopContainer/>
-                {/*<NavBar/>*/}
+                <TopContainer handleSuccessfulLogin={this.props.handleSuccessfulLogin}/>
                 <HowItWorksBanner/>
                 <HowItWorks/>
                 <AboutBanner/>

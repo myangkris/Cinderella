@@ -12,20 +12,24 @@ const popover = {
 }
 
 const content = (
-        <Button style={popover}><Link to="/confirm">Reserve me!</Link></Button>
+        <Button style={popover}>Reserve me!</Button>
 );
 
 
 export class MachineStatus extends React.Component {
 
     getMachineStatus = () => {
-        if (this.props.machineStatus == 'isAvailable') {
+        if (this.props.machineStatus === 0) {
             return <Popover placement="top" content={content} arrowPointAtCenter><img src={Available} alt=""/></Popover>
-        } else if (this.props.machineStatus == 'isOccupied') {
+        } else if (this.props.machineStatus === 1) {
             return <img src={Occupied} alt=""/>
-        } else if (this.props.machineStatus == 'isMalfunctioned') {
+        } else if (this.props.machineStatus === 2) {
             return <img src={Malfunction} alt=""/>
         }
+    }
+
+    handleClick() {
+        console.log(this.props.machinId)
     }
 
     render() {

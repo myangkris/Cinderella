@@ -9,6 +9,7 @@ class NormalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                localStorage.setItem('username', values.username)
                 fetch(`${API_ROOT}/login`, {
                     method: 'POST',
                     body: JSON.stringify({
@@ -24,7 +25,7 @@ class NormalLoginForm extends React.Component {
                     message.success('Sign In Success!');
                     console.log(data);
                     //this.props.history.push('/reserve');
-                    //this.props.handleSuccessfulLogin(data);
+                    this.props.handleSuccessfulLogin(data)
                 }).catch((e) => {
                     console.log(e);
                     message.error('Sign In Failed.');

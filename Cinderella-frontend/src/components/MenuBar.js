@@ -18,23 +18,25 @@ export class MenuBar extends React.Component {
 
     render() {
         return (
-            <Menu
-                onClick={this.handleClick}
-                selectedKeys={[this.state.current]}
-                mode="horizontal"
-            >
-                <Menu.Item key="reserve">
-                    <Link to="/reserve"><Icon type="schedule" />Reserve</Link>
-                </Menu.Item>
-                <Divider type="vertical" />
-                <Menu.Item key="track">
-                    <Link to="/track"><Icon type="dashboard" />Track</Link>
-                </Menu.Item>
-                <Divider type="vertical" />
-                <Menu.Item key="report">
-                    <Link to="/report"><Icon type="tool" />Report</Link>
-                </Menu.Item>
-            </Menu>
+            <div className="menubar-container">
+                <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.state.current]}
+                    mode="horizontal"
+                >
+                    <Menu.Item key="reserve">
+                        <Link to="/reserve"><Icon type="schedule" />Reserve</Link>
+                    </Menu.Item>
+                    <Divider type="vertical" />
+                    <Menu.Item key="track">
+                        <Link to="/track"><Icon type="dashboard" />Track</Link>
+                    </Menu.Item>
+                    <Divider type="vertical" />
+                    <Menu.Item key="report" disabled={true}>
+                        <Link to="/report"><Icon type="tool" />Report</Link>
+                    </Menu.Item>
+                </Menu>
+            </div>
         );
     }
 }

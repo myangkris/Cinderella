@@ -13,7 +13,7 @@ export class TopContainer extends React.Component {
                     <h1>Sign in with your</h1>
                     <img src={LogoTextWhite} alt=""/>
                     <h1>Account</h1>
-                    <Login />
+                    <Login handleSuccessfulLogin={this.props.handleSuccessfulLogin}/>
                     <img src={HowImage} alt=""/>
                 </div>
                 <header className="showcase">
