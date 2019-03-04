@@ -106,12 +106,12 @@ public class Login extends AbstractAutowiredHttpServlet {
 						    "this is my custom Secret key for authnetication".getBytes("UTF-8")
 						  )
 						  .compact();
-				System.out.print(jwt);
+				System.out.println(jwt);
 				UserAccount account = new UserAccount(userName);
 				JSONArray array = account.checkMachineList();
 				JSONObject user = account.getProfile();
 				obj.put("status", "OK").put("user_info" , user).put("machine_list" , array).put("Authorization", jwt);
-System.out.println("machine_list: " + obj);
+System.out.println("OBJECT: " + obj);
 			} else {
 				response.setStatus(401);
 				obj.put("status", "User Doesn't Exist");
