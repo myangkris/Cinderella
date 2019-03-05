@@ -32,7 +32,7 @@ export class MenuBar extends React.Component {
                         <Link to="/track"><Icon type="dashboard" />Track</Link>
                     </Menu.Item>
                     <Divider type="vertical" />
-                    <Menu.Item key="report">
+                    <Menu.Item key="report" disabled={true}>
                         <Link to="/report"><Icon type="tool" />Report</Link>
                     </Menu.Item>
                 </Menu>

@@ -8,7 +8,7 @@ class App extends Component {
 
   state = {
     isLoggedIn: Boolean(localStorage.getItem(TOKEN_KEY)),
-    user_info: "",
+    user_info: [],
     machineStatus: "",
   }
 
@@ -16,9 +16,9 @@ class App extends Component {
     localStorage.setItem(TOKEN_KEY, data['Authorization']);
     localStorage.setItem("user_info", JSON.stringify(data['user_info']));
     localStorage.setItem("machine_list", data['machine_list']);
-    console.log(data['machine_list'])
-    console.log(localStorage.getItem(TOKEN_KEY))
+
     //this.setState({ isLoggedIn: true, user_info: data['user_info'], machine_list: data['machine_list']});
+    //console.log("DATA :  " + JSON.parse(this.data))
     this.setState({ isLoggedIn: true})
     this.setState({ user_info: data['user_info']})
     this.setState({ machineStatus: data['machine_list']})

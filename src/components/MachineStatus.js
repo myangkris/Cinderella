@@ -48,7 +48,7 @@ export class MachineStatus extends React.Component {
             return <Link to={path}>
                     < img onClick={this.handleClick} src={Available} alt=""/>
                     </Link>*/
-            return <Link to="reserve">< img onClick={this.fetchData} src={Available} alt=""/></Link>
+            return <Link to="track">< img onClick={this.fetchData} src={Available} alt=""/></Link>
 
 
         } else if (this.props.machineStatus === 1) {
