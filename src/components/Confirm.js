@@ -1,23 +1,12 @@
 import React from 'react'
 import {Header} from './Header'
 import {Footer} from './Footer'
-import Countdown from 'antd/lib/statistic/Countdown'
+import ConfirmMachine from './ConfirmMachine'
+import ConfirmText from './ConfirmText'
 import {UserContext} from './App'
 
 
-
-export class Track extends React.Component {
-
-    state={
-        deadline: ''
-    }
-
-    componentDidMount() {
-        this.setState({
-            deadline: Date.now() + 51000
-        })
-    }
-
+export class Confirm extends React.Component {
     render() {
         return(
             <div>
@@ -26,9 +15,10 @@ export class Track extends React.Component {
                         <Header userInfo={userInfo} handleLogout={this.props.handleLogout}/>
                     )}
                 </UserContext.Consumer>
-                <div className="countdown">
-                    <Countdown title="Your laundry will be finished in:" value={this.state.deadline} />
-                </div>
+                <section className="confirm-holder">
+                    <ConfirmMachine/>
+                    <ConfirmText/>
+                </section>
                 <Footer/>
             </div>
         )

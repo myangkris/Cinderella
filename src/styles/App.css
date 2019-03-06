@@ -8,6 +8,10 @@
     --red: #d24441;
     --shadow: 0 1px 5px rgba(236, 168, 74, 0.5);
 }
+.Register-header{
+    background-color: #2E4057;
+    height: 50px;
+}
 
 .wrapper{
     display: grid;
@@ -105,6 +109,10 @@
     .footer-connect{
         padding: 1rem 4rem;
     }
+
+    .confirm-holder{
+        grid-template-columns: 1fr;
+    }
 }
 
 @media(max-width: 500px){
@@ -128,4 +136,7 @@
         padding: 0.5rem 1rem;
     }
 
+    .confirm-holder{
+        grid-template-columns: 1fr;
+    }
 }

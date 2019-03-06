@@ -1,7 +1,7 @@
 import React from 'react'
-import {
-    Form, Icon, Input, Button, Checkbox, message,
-} from 'antd';
+import { API_ROOT } from '../constants'
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
+import { Link } from 'react-router-dom';
 
 class NormalLoginForm extends React.Component {
     handleSubmit = (e) => {
@@ -9,25 +9,22 @@ class NormalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                fetch(`${''}/login`, {
+                fetch(`http://localhost:8080/Cinderella/login`, {
                     method: 'POST',
                     body: JSON.stringify({
                         username: values.username,
                         password: values.password,
                     }),
-                }).then((response) => {
-                    if(response.ok) {
-                        return response.text()
-                    }
-                    throw new Error(response.statusText)
-                }).then((data) => {
-                    message.success('Login Success!')
-                    console.log(data)
+                }).then(res => res.json()).then((data) => {
+                    message.success('Sign In Success!');
+                    console.log(data);
+                    //console.log("Machine List: \n" + data.json().machine_list)
+                    //this.props.history.push('/reserve');
                     this.props.handleSuccessfulLogin(data)
                 }).catch((e) => {
-                    console.log(e)
-                    message.error('Login Failed')
-                })
+                    console.log(e);
+                    message.error('Sign In Failed.');
+                });
             }
         });
     }
@@ -37,10 +34,10 @@ class NormalLoginForm extends React.Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
-                    {getFieldDecorator('userName', {
+                    {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email/Phone Number" />
+                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
                     )}
                 </Form.Item>
                 <Form.Item>
@@ -64,10 +61,10 @@ class NormalLoginForm extends React.Component {
                         Sign In
                     </Button>
                     <p>
-                        Don't have an account? Sign up today
+                        Don't have an account? Register today!
                     </p>
                     <Button type="primary" htmlType="submit" className="sign-up-button">
-                        Sign Up
+                        <Link to="/register">Sign Up Now!</Link>
                     </Button>
                 </Form.Item>
             </Form>
@@ -75,4 +72,4 @@ class NormalLoginForm extends React.Component {
     }
 }
 
-export const SignInForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
+export const Login = Form.create({ name: 'normal_login' })(NormalLoginForm);

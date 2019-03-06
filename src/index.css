@@ -1,10 +1,12 @@
-@import './styles/SignInForm.css';
+@import 'styles/Login.css';
 @import './styles/NavBar.css';
 @import "styles/HowItWorks$AboutBanner.css";
 @import "./styles/HowItWorks.css";
 @import "./styles/Footer.css";
 @import "./styles/Header.css";
 @import './styles/MachineStatus.css';
+@import './styles/Register.css';
+@import './styles/Confirm.css';
 
 body {
   margin: 0;
@@ -19,4 +21,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.countdown{
+  display: flex;
+  justify-content: center;
+  height: 500px;
 }

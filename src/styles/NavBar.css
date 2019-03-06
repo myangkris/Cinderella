@@ -24,3 +24,25 @@
     color: var(--darkBlueHover);
     background-color: var(--orangeHover);
 }
+
+.menu-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.menu-container a{
+    color: #fff;
+    margin: auto 0;
+}
+
+.logout-container{
+    display: flex;
+}
+
+.popover{
+    margin: auto;
+    color: #ffffff;
+    font-weight: 700;
+    padding-right: 0.5rem;
+}
