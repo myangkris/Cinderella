@@ -6,6 +6,7 @@ import Available from '../assets/design_elements/machine - available.png'
 import Occupied from '../assets/design_elements/machine - in use.png'
 import Malfunction from '../assets/design_elements/machine - fixing.png'
 import {UserContext} from './App'
+import {API_ROOT} from '../constants'
 
 export class Reserve extends React.Component {
 
@@ -14,7 +15,7 @@ export class Reserve extends React.Component {
     }
 
     componentDidMount ()  {
-        fetch(`http://localhost:8080/Cinderella/allWashMachines`, {
+        fetch(`${API_ROOT}/allWashMachines`, {
             method: 'POST',
         })
             .then(res => res.json())
@@ -32,8 +33,13 @@ export class Reserve extends React.Component {
         const machines = this.state.machineStatus.map(machine =>
             <UserContext.Consumer>
                 {userInfo => (
-                    <MachineStatus userInfo={userInfo} key={machine.id} machineId={machine.id}
-                                   machineStatus={machine.status}/>
+                    <MachineStatus
+                        userInfo={userInfo}
+                        key={machine.id}
+                        machineId={machine.id}
+                        machineStatus={machine.status}
+                        reserve={this.props.reserve}
+                    />
                 )}
             </UserContext.Consumer>
         )

@@ -2,11 +2,19 @@
     width: 200px;
 }
 
+.logo-container img:hover{
+    cursor: pointer;
+}
+
 .logo-container{
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 1rem;
+}
+
+.ant-menu-item{
+    border: none;
 }
 
 ul.ant-menu-horizontal > .ant-menu-item:hover{

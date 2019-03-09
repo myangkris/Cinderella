@@ -1,2 +1,2 @@
-export const API_ROOT = 'https://around-75015.appspot.com/api/v1';
+export const API_ROOT = 'http://18.222.173.46/Cinderella';
 export const TOKEN_KEY = 'TOKEN_KEY'

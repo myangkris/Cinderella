@@ -7,6 +7,8 @@ import {UserContext} from './App'
 
 
 export class Confirm extends React.Component {
+
+
     render() {
         return(
             <div>
@@ -16,8 +18,16 @@ export class Confirm extends React.Component {
                     )}
                 </UserContext.Consumer>
                 <section className="confirm-holder">
-                    <ConfirmMachine/>
-                    <ConfirmText/>
+                    <UserContext.Consumer>
+                        {userInfo => (
+                            <ConfirmMachine userInfo={userInfo} />
+                        )}
+                    </UserContext.Consumer>
+                    <UserContext.Consumer>
+                        {userInfo => (
+                            <ConfirmText userInfo={userInfo} />
+                        )}
+                    </UserContext.Consumer>
                 </section>
                 <Footer/>
             </div>

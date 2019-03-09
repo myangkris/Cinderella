@@ -9,13 +9,7 @@ import {UserContext} from './App'
 export class Track extends React.Component {
 
     state={
-        deadline: ''
-    }
-
-    componentDidMount() {
-        this.setState({
-            deadline: Date.now() + 51000
-        })
+        deadline: Date.now() + 51000
     }
 
     render() {

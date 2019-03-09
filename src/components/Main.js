@@ -11,13 +11,14 @@ import {Confirm} from './Confirm'
 
 export class Main extends React.Component{
 
+
     getLogin = () => {
         return this.props.isLoggedIn ? <Redirect to="/reserve"/> : <Home
             handleSuccessfulLogin={this.props.handleSuccessfulLogin}/>
     }
 
     getReserve = () => {
-        return this.props.isLoggedIn ? <Reserve handleLogout={this.props.handleLogout}/> : <Redirect to="/home"/>
+        return this.props.isLoggedIn ? <Reserve reserve={this.props.reserve} handleLogout={this.props.handleLogout}/> : <Redirect to="/home"/>
     }
 
     getTrack = () => {
@@ -27,6 +28,8 @@ export class Main extends React.Component{
     getConfirm = () => {
         return this.props.isLoggedIn ? <Confirm handleLogout={this.props.handleLogout}/> : <Redirect to="/home"/>
     }
+
+
 
     render() {
         return(

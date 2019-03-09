@@ -8,7 +8,6 @@ import {HowItWorksBanner} from "./HowItWorksBanner";
 import {HowItWorks} from "./HowItWorks";
 import {AboutBanner} from "./AboutBanner";
 
-const { Option } = Select;
 
 
 class RegistrationForm extends React.Component {
@@ -23,7 +22,7 @@ class RegistrationForm extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 // send request
-                fetch(`http://localhost:8080/Cinderella/register`, {
+                fetch(`${API_ROOT}/register`, {
                     method: 'POST',
                     body: JSON.stringify({
                         name: values.name,

@@ -113,6 +113,9 @@
     .confirm-holder{
         grid-template-columns: 1fr;
     }
+    .menu-container{
+        padding: 0 3rem;
+    }
 }
 
 @media(max-width: 500px){
@@ -138,5 +141,11 @@
 
     .confirm-holder{
         grid-template-columns: 1fr;
+    }
+    .menu-container{
+        padding: 0 1rem;
+    }
+    .popover{
+        padding-left: 1.2rem;
     }
 }

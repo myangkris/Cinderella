@@ -9,7 +9,7 @@ class NormalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                fetch(`http://localhost:8080/Cinderella/login`, {
+                fetch(`${API_ROOT}/login`, {
                     method: 'POST',
                     body: JSON.stringify({
                         username: values.username,
@@ -17,9 +17,6 @@ class NormalLoginForm extends React.Component {
                     }),
                 }).then(res => res.json()).then((data) => {
                     message.success('Sign In Success!');
-                    console.log(data);
-                    //console.log("Machine List: \n" + data.json().machine_list)
-                    //this.props.history.push('/reserve');
                     this.props.handleSuccessfulLogin(data)
                 }).catch((e) => {
                     console.log(e);

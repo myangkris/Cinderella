@@ -30,3 +30,32 @@
     padding-bottom: 1rem;
 }
 
+.confirm-button{
+    width: 18rem;
+    background-color: var(--darkBlue);
+    border: var(--lightBlue);
+    font-weight: 700;
+    height: 2rem;
+    margin: 2rem 0;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.confirm-button:hover{
+    background-color: var(--darkBlueHover);
+    color: var(--orange);
+}
+
+.confirm-button a{
+    color: #ffffff;
+}
+
+.confirm-button a:hover{
+    color: var(--orange);
+}
+
+.reserve-time{
+    font-weight: bold;
+    padding: 1rem 0;
+}
