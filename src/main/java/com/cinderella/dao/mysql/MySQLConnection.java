@@ -17,8 +17,8 @@ import com.cinderella.entity.Site;
 import com.cinderella.entity.Site.SiteBuilder;
 import com.cinderella.entity.User;
 import com.cinderella.entity.User.UserBuilder;
-import com.cinderella.entity.WashMachine;
-import com.cinderella.entity.WashMachine.WashMachineBuilder;;
+import com.cinderella.entity.Machine;
+import com.cinderella.entity.Machine.WashMachineBuilder;;
 
 @Repository
 public class MySQLConnection implements DBConnection {
@@ -84,13 +84,13 @@ public class MySQLConnection implements DBConnection {
 				ResultSet rs = stmt.executeQuery();
 				if (rs.next()) {
 					UserBuilder builder = new UserBuilder();
-					builder.setUserId(rs.getInt("UserId"));
-					builder.setUserName(rs.getString("username"));
-					builder.setUserPassword(rs.getString("password"));
-					builder.setUserBalance(rs.getDouble("balance"));
-					builder.setUserPhoneNumber(rs.getLong("phoneNumber"));
-					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
-					builder.setUserEmail(rs.getString("email"));
+					builder.setId(rs.getInt("id"));
+					builder.setUsername(rs.getString("username"));
+					builder.setPassword(rs.getString("password"));
+					builder.setBalance(rs.getDouble("balance"));
+					builder.setPhoneNumber(rs.getString("phoneNumber"));
+					builder.setBonusPoints(rs.getInt("bonusPoints"));
+					builder.setEmail(rs.getString("email"));
 					return builder.build();
 				}
 			} catch (SQLException e) {
@@ -118,13 +118,13 @@ public class MySQLConnection implements DBConnection {
 				ResultSet rs = stmt.executeQuery();
 				if (rs.next()) {
 					UserBuilder builder = new UserBuilder();
-					builder.setUserId(rs.getInt("UserId"));
-					builder.setUserName(rs.getString("username"));
-					builder.setUserPassword(rs.getString("password"));
-					builder.setUserBalance(rs.getDouble("balance"));
-					builder.setUserPhoneNumber(rs.getLong("phoneNumber"));
-					builder.setUserBonusPoints(rs.getInt("bonusPoints"));
-					builder.setUserEmail(rs.getString("email"));
+					builder.setId(rs.getInt("id"));
+					builder.setUsername(rs.getString("username"));
+					builder.setPassword(rs.getString("password"));
+					builder.setBalance(rs.getDouble("balance"));
+					builder.setPhoneNumber(rs.getString("phoneNumber"));
+					builder.setBonusPoints(rs.getInt("bonusPoints"));
+					builder.setEmail(rs.getString("email"));
 					return builder.build();
 				}
 			} catch (SQLException e) {
@@ -200,7 +200,7 @@ public class MySQLConnection implements DBConnection {
 	 * @Return WashMachine
 	 */
 	@Override
-	public WashMachine findWashMachineById(long machineId) {
+	public Machine findWashMachineById(long machineId) {
 		if (conn != null) {
 			String sql = "SELECT * FROM washmachine WHERE MachineId = ?";
 			try {
@@ -257,10 +257,10 @@ public class MySQLConnection implements DBConnection {
 			try {
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, user.getId());
-				stmt.setString(2, user.getName());
+				stmt.setString(2, user.getUsername());
 				stmt.setString(3, user.getPassword());
 				stmt.setDouble(4, user.getBalance());
-				stmt.setLong(5, user.getPhoneNumber());
+				stmt.setString(5, user.getPhoneNumber());
 				stmt.setInt(6, user.getBonusPoints());
 				stmt.setString(7, user.getEmail());
 				String userIdString = Integer.toString(user.getId());
@@ -298,10 +298,10 @@ public class MySQLConnection implements DBConnection {
 					+ "email = ? WHERE UserId = ?";
 			try {
 				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setString(1, user.getName());
+				stmt.setString(1, user.getUsername());
 				stmt.setString(2, user.getPassword());
 				stmt.setDouble(3, user.getBalance());
-				stmt.setLong(4, user.getPhoneNumber());
+				stmt.setString(4, user.getPhoneNumber());
 				stmt.setInt(5, user.getBonusPoints());
 				stmt.setString(6, user.getEmail());
 				stmt.setInt(7, user.getId());
@@ -329,13 +329,13 @@ public class MySQLConnection implements DBConnection {
 	 * @Return boolean, success or not
 	 */
 	@Override
-	public boolean addOrUpdateWashMachine(WashMachine washMachine) {
+	public boolean addOrUpdateWashMachine(Machine washMachine) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return false;
 		}
 		// check if the machine already existed
-		WashMachine mac = findWashMachineById(washMachine.getId());
+		Machine mac = findWashMachineById(washMachine.getId());
 
 		if (mac != null) {
 			System.out.println("Call update helper");
@@ -347,7 +347,7 @@ public class MySQLConnection implements DBConnection {
 	}
 
 	@Override
-	public boolean addWashMachine(WashMachine washMachine) {
+	public boolean addWashMachine(Machine washMachine) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return false;
@@ -379,7 +379,7 @@ public class MySQLConnection implements DBConnection {
 	}
 
 	@Override
-	public boolean updateWashMachine(WashMachine washMachine) {
+	public boolean updateWashMachine(Machine washMachine) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return false;
@@ -590,7 +590,7 @@ public class MySQLConnection implements DBConnection {
 			return;
 		}
 		// check if the machine already existed
-		WashMachine mac = findWashMachineById(machineId);
+		Machine mac = findWashMachineById(machineId);
 
 		if (mac != null) {
 			try {
@@ -675,12 +675,12 @@ public class MySQLConnection implements DBConnection {
 	 * @throws Exception
 	 */
 	@Override
-	public List<WashMachine> getWashMachineList(String address) {
+	public List<Machine> getWashMachineList(String address) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return null;
 		}
-		List<WashMachine> list = new ArrayList<>();
+		List<Machine> list = new ArrayList<>();
 		String sql = "SELECT * FROM washmachine WHERE locatedAt = ?";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);

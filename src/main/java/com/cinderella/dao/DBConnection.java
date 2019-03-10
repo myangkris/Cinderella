@@ -5,7 +5,7 @@ import java.util.List;
 import com.cinderella.entity.Manager;
 import com.cinderella.entity.Site;
 import com.cinderella.entity.User;
-import com.cinderella.entity.WashMachine;
+import com.cinderella.entity.Machine;
 
 public interface DBConnection {
 	/**
@@ -66,7 +66,7 @@ public interface DBConnection {
 	 * @param machineId
 	 * @Return WashMachine
 	 */
-	public WashMachine findWashMachineById(long machineId);
+	public Machine findWashMachineById(long machineId);
 
 	/**
 	 * Return success or not by connecting the db to add or modify the user
@@ -102,7 +102,7 @@ public interface DBConnection {
 	 * @param washMachine
 	 * @Return boolean, success or not
 	 */
-	public boolean addOrUpdateWashMachine(WashMachine washMachine);
+	public boolean addOrUpdateWashMachine(Machine washMachine);
 	
 	/**
 	 * Return success or not by connecting the db to add the washMachine
@@ -111,7 +111,7 @@ public interface DBConnection {
 	 * @param washMachine
 	 * @Return boolean, success or not
 	 */
-	public boolean addWashMachine(WashMachine washMachine);
+	public boolean addWashMachine(Machine washMachine);
 	
 	
 	/**
@@ -121,7 +121,7 @@ public interface DBConnection {
 	 * @param washMachine
 	 * @Return boolean, success or not
 	 */
-	public boolean updateWashMachine(WashMachine washMachine);
+	public boolean updateWashMachine(Machine washMachine);
 
 	/**
 	 * Return success or not by connecting the db to add or modify the site
@@ -194,7 +194,7 @@ public interface DBConnection {
 	 * @return List<WashMachine>
 	 * @throws Exception
 	 */
-	public List<WashMachine> getWashMachineList(String address) throws Exception;
+	public List<Machine> getWashMachineList(String address) throws Exception;
 }
 
 

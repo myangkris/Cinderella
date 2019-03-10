@@ -3,77 +3,77 @@ package com.cinderella.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-    public static final int DUMMY_USER_ID = 0;
+    public static final int DUMMY_USER_ID = 1;
     @JsonProperty
 	private final int id;
     @JsonProperty
-	private final String name;
+	private final String username;
     @JsonProperty
 	private String password;
     @JsonProperty
 	private double balance;
     @JsonProperty
-	private long phoneNumber;
+	private String phoneNumber;
     @JsonProperty
 	private int bonusPoints;
     @JsonProperty
 	private String email;
 	
 	private User(UserBuilder builder) {
-		this.id = builder.userId;
-		this.name = builder.userName;
-		this.password = builder.userPassword;
-		this.balance = builder.userBalance;
-		this.phoneNumber = builder.userPhoneNumber;
-		this.bonusPoints = builder.userBonusPoints;
-		this.email = builder.userEmail;
+		this.id = builder.id;
+		this.username = builder.username;
+		this.password = builder.password;
+		this.balance = builder.balance;
+		this.phoneNumber = builder.phoneNumber;
+		this.bonusPoints = builder.bonusPoints;
+		this.email = builder.email;
 	}
 	
 	public static class UserBuilder {
-		private int userId;
-		private String userName;
-		private String userPassword;
-		private double userBalance;
-		private long userPhoneNumber;
-		private int userBonusPoints;
-		private String userEmail;
+		private int id;
+		private String username;
+		private String password;
+		private double balance;
+		private String phoneNumber;
+		private int bonusPoints;
+		private String email;
 		
 		public User build() {
 			return new User(this);
 		}
 		
-		public UserBuilder setUserId(int userId) {
-			this.userId = userId;
+		public UserBuilder setId(int id) {
+			this.id = id;
 			return this;
 		}
 		
-		public UserBuilder setUserName(String userName) {
-			this.userName = userName;
+		public UserBuilder setUsername(String username) {
+			this.username = username;
 			return this;
 		}
 		
-		public UserBuilder setUserPassword(String userPassword) {
-			this.userPassword = userPassword;
+		public UserBuilder setPassword(String password) {
+			this.password = password;
 			return this;
 		}
 		
-		public UserBuilder setUserBalance(double userBalance) {
-			this.userBalance = userBalance;
+		public UserBuilder setBalance(double balance) {
+			this.balance = balance;
 			return this;
 		}
 		
-		public UserBuilder setUserPhoneNumber(long userPhoneNumber) {
-			this.userPhoneNumber = userPhoneNumber;
+		public UserBuilder setPhoneNumber(String phoneNumber) {
+			this.phoneNumber = phoneNumber;
 			return this;
 		}
 		
-		public UserBuilder setUserBonusPoints(int userBonusPoints) {
-			this.userBonusPoints = userBonusPoints;
+		public UserBuilder setBonusPoints(int bonusPoints) {
+			this.bonusPoints = bonusPoints;
 			return this;
 		}
 		
-		public UserBuilder setUserEmail(String userEmail) {
-			this.userEmail = userEmail;
+		public UserBuilder setEmail(String email) {
+			this.email = email;
 			return this;
 		}
 		
@@ -83,8 +83,8 @@ public class User {
 		return id;
 	}
 		
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 	
 	public String getPassword() {
@@ -105,11 +105,11 @@ public class User {
 		return this;
 	}
 	
-	public long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 	
-	public User setPhoneNumber(long phoneNumber) {
+	public User setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		return this;
 	}

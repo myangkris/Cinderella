@@ -47,24 +47,24 @@ public class Register extends HttpServlet {
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
 			
-			String userName = input.getString("name");
+			String username = input.getString("username");
 			String password = input.getString("password");
-			String emailAddress = input.getString("email");
+			String email = input.getString("email");
 			String phoneNumber = input.getString("phoneNumber");
 			UserBuilder builder = new UserBuilder();
-			Date date = new Date();
-			builder.setUserName(userName);
-			builder.setUserPassword(password);
-			builder.setUserBalance(100);
-			builder.setUserPhoneNumber(StringToInt.toNumber(phoneNumber));
-			builder.setUserBonusPoints(0);
-			builder.setUserEmail(emailAddress);
-			builder.setUserId(date.getSeconds()*60*24*31*12*300 + 
+			//Date date = new Date();
+			builder.setUsername(username);
+			builder.setPassword(password);
+			builder.setBalance(100);
+			builder.setPhoneNumber(phoneNumber);
+			builder.setBonusPoints(0);
+			builder.setEmail(email);
+			/*builder.setUserId(date.getSeconds()*60*24*31*12*300 + 
 					date.getMinutes()*24*31*12*300 + 
 					date.getHours()*31*12*300 + 
 					date.getDate()*12*300 + 
 					date.getMonth()*300 + 
-					date.getYear());
+					date.getYear());*/
 			User user = builder.build();
 			
 

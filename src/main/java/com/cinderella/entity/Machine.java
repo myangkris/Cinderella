@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class WashMachine {
+public class Machine {
     public static final int STATUS_AVAILABLE = 0;
     public static final int STATUS_WASHING = 1;
     public static final int STATUS_ERROR = 2;
@@ -27,7 +27,7 @@ public class WashMachine {
 	private int waitingCapacity;
 	
 	// Constructor------------------------------------------------
-	private WashMachine(WashMachineBuilder builder) {
+	private Machine(WashMachineBuilder builder) {
 		this.id = builder.id;
 		this.status = builder.status;
 		this.pricePerService = builder.pricePerService;
@@ -71,37 +71,37 @@ public class WashMachine {
 	}
 	
 	// Setters------------------------------------------------	
-	public WashMachine setStatus(int status) {
+	public Machine setStatus(int status) {
 		this.status = status;
 		return this;
 	}
 
-	public WashMachine setPricePerService(float pricePerService) {
+	public Machine setPricePerService(float pricePerService) {
 		this.pricePerService = pricePerService;
 		return this;
 	}
 
-	public WashMachine setUsedBy(int usedBy) {
+	public Machine setUsedBy(int usedBy) {
 		this.usedBy = usedBy;
 		return this;
 	}
 
-	public WashMachine setLocation(String location) {
+	public Machine setLocation(String location) {
 		this.location = location;
 		return this;
 	}
 
-	public WashMachine setWaitedBy(int waitedBy) {
+	public Machine setWaitedBy(int waitedBy) {
 		this.waitedBy = waitedBy;
 		return this;
 	}
 
-	public WashMachine setStartsAt(Timestamp startsAt) {
+	public Machine setStartsAt(Timestamp startsAt) {
 		this.startsAt = startsAt;
 		return this;
 	}
 
-	public WashMachine setWaitingCapacity(int waitingCapacity) {
+	public Machine setWaitingCapacity(int waitingCapacity) {
 		this.waitingCapacity = waitingCapacity;
 		return this;
 	}
@@ -118,8 +118,8 @@ public class WashMachine {
 		private Timestamp startsAt;
 		private int waitingCapacity;
 		
-		public WashMachine build() {
-			return new WashMachine(this);
+		public Machine build() {
+			return new Machine(this);
 		}
 		
 		// Builder's Setters

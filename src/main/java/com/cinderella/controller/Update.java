@@ -6,13 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
 import com.cinderella.entity.User;
 import com.cinderella.entity.User.UserBuilder;
-import com.cinderella.service.account.Account;
 import com.cinderella.service.account.UserAccount;
 
 /**
@@ -51,12 +49,12 @@ public class Update extends HttpServlet {
 			String phoneNumber = input.getString("phoneNumber");
 			UserBuilder builder = new UserBuilder();
 
-			builder.setUserPassword(password);
+			builder.setPassword(password);
 			if (phoneNumber != null) {
-				builder.setUserPhoneNumber(StringToInt.toNumber(phoneNumber));
+				builder.setPhoneNumber(phoneNumber);
 			}
 			
-			builder.setUserEmail(emailAddress);
+			builder.setEmail(emailAddress);
 			User user = builder.build();
 		
 			JSONObject obj = new JSONObject();

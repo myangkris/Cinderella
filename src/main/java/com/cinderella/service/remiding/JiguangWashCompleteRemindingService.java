@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinderella.dao.mysql.MySQLConnection;
+import com.cinderella.dao.user.UserDao;
 import com.cinderella.entity.User;
 
 import cn.jiguang.common.ClientConfig;
@@ -24,16 +25,16 @@ public class JiguangWashCompleteRemindingService implements WashCompleteRemindin
     private static final String MASTER_SECRET = "563838d2737edff7fc43a8a9";
     
     @Autowired
-    private MySQLConnection connection;
+    private UserDao userDao;
     
     @Override
     public void pushReminder(String userId) {
         JPushClient jpushClient = new JPushClient(MASTER_SECRET, APP_KEY, null, ClientConfig.getInstance());
         
-        User user = connection.findUserByUserId(Integer.parseInt(userId));
+        User user = userDao.getUserById(Integer.parseInt(userId));
         
         // For push, all you need do is to build PushPayload object.
-        PushPayload payload = PushPayload.alertAll(user.getName() + ", your laundry is done!");
+        PushPayload payload = PushPayload.alertAll(user.getUsername() + ", your laundry is done!");
 
         try {
             PushResult result = jpushClient.sendPush(payload);

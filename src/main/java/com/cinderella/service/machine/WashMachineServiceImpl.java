@@ -10,13 +10,17 @@ import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cinderella.dao.machine.MachineDao;
 import com.cinderella.dao.mysql.MySQLConnection;
 import com.cinderella.dao.mysql.MySQLDBUtil;
 import com.cinderella.dto.WashingInfo;
-import com.cinderella.entity.WashMachine;
+import com.cinderella.entity.Machine;
 
 @Service
 public class WashMachineServiceImpl implements WashMachineService {
@@ -26,18 +30,56 @@ public class WashMachineServiceImpl implements WashMachineService {
     
     @Override
     public void updateWashMachineStatus(WashingInfo washingInfo, int status) {
-        WashMachine washMachine = connection.findWashMachineById(Long.parseLong(washingInfo.getMachineId()));
+        Machine washMachine = connection.findWashMachineById(Long.parseLong(washingInfo.getMachineId()));
         washMachine.setStatus(status);
         washMachine.setUsedBy(Integer.parseInt(washingInfo.getUserId()));
-        if (WashMachine.STATUS_WASHING == status) {
+        if (Machine.STATUS_WASHING == status) {
             washMachine.setStartsAt(Timestamp.valueOf(LocalDateTime.now(ZoneOffset.of("-16"))));
         }
         connection.updateWashMachine(washMachine);
     }
+    /*@Autowired
+    private MachineDao machineDao;
+    
+    @Override
+    public void updateWashMachineStatus(WashingInfo washingInfo, int status) {
+        Machine washMachine = machineDao.findWashMachineById(Long.parseLong(washingInfo.getMachineId()));
+        washMachine.setStatus(status);
+        washMachine.setUsedBy(Integer.parseInt(washingInfo.getUserId()));
+        if (Machine.STATUS_WASHING == status) {
+            washMachine.setStartsAt(Timestamp.valueOf(LocalDateTime.now(ZoneOffset.of("-16"))));
+        }
+        connection.updateWashMachine(washMachine);
+    }*/
 
     @Override
-    public List<WashMachine> listAllMachines() {
+    public List<Machine> listAllMachines() {
         return connection.getWashMachineList(DEFAULT_ADDRESS);
+    }
+    
+    @Override
+    public JSONArray listAllMachinesInJSONArray() {
+        List<Machine> list = listAllMachines();
+        JSONArray array = new JSONArray();
+        for(Machine machine : list) {
+            JSONObject obj = new JSONObject();
+            Float price = machine.getPricePerService();
+//`MachineID`, `status`, `pricePerService`, `UsedBy`, `locatedAt`, `WaitedBy`, `startsAt`, `waitingCapacity`
+            try {
+                obj.put("MachineID", machine.getId());
+                obj.put("status", machine.getStatus());
+                obj.put("pricePerService", price.toString());
+                obj.put("UsedBy", machine.getUsedBy());
+                obj.put("locatedAt", machine.getLocation());
+                obj.put("WaitedBy", machine.getWaitedBy());
+                obj.put("startsAt", machine.getStartsAt());
+                obj.put("waitingCapacity", machine.getWaitingCapacity());
+                array.put(obj);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return array;
     }
     
     public static void main(String[] args) throws Exception {
@@ -61,4 +103,5 @@ public class WashMachineServiceImpl implements WashMachineService {
         
         System.out.println(new WashMachineServiceImpl().listAllMachines());
     }
+
 }

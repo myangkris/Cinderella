@@ -25,7 +25,7 @@ public class Test {
 		//Test1: FindMachineById(666)
 		System.out.println("----------------------------------");
 		System.out.println("Test1: find machine by id '666'(not existed)");
-		WashMachine mac = conn.findWashMachineById(666);
+		Machine mac = conn.findWashMachineById(666);
 		try {
 			System.out.println("MachineID:             " + mac.getId());
 			System.out.println("Status:                " + mac.getStatus());
@@ -186,14 +186,14 @@ public class Test {
 		System.out.println("----------------------------------");
 		System.out.println("Test6: getWashMachineList('1234 Center Dr')");
 		try {
-			List<WashMachine> list = conn.getWashMachineList("1234 Center Dr");
+			List<Machine> list = conn.getWashMachineList("1234 Center Dr");
 			if (list == null) {
 				System.out.println("Connection failed");
 			}
 			if (list.size() == 0) {
 				System.out.println("No machine found");
 			}
-			for (WashMachine mack : list) {
+			for (Machine mack : list) {
 				System.out.println("-------------------------------------------");
 				System.out.println("MachineID:             " + mack.getId());
 				System.out.println("Status:                " + mack.getStatus());

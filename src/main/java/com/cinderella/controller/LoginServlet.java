@@ -15,9 +15,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cinderella.entity.User;
 import com.cinderella.service.account.Account;
 import com.cinderella.service.account.UserAccount;
 import com.cinderella.service.machine.WashMachineService;
+import com.cinderella.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -26,7 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Servlet implementation class Login
  */
 @WebServlet("/login")
-public class Login extends AbstractAutowiredHttpServlet {
+public class LoginServlet extends AbstractAutowiredHttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@Autowired
@@ -34,10 +36,15 @@ public class Login extends AbstractAutowiredHttpServlet {
 	
 	@Autowired
 	private WashMachineService washMachineService;
+	
+	@Autowired
+	private UserService userService;
+	
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -88,18 +95,18 @@ public class Login extends AbstractAutowiredHttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			String userName = input.getString("username");
+			String username = input.getString("username");
 			String password = input.getString("password");
 			
 			JSONObject obj = new JSONObject();
-			if (Account.logIn(userName, password)) {
+			if (Account.logIn(username, password)) {
 //				HttpSession session = request.getSession(); // this session ID will attach to response
 //				session.setAttribute("userName", userName);
 //				session.setMaxInactiveInterval(600);
 				@SuppressWarnings("deprecation")
 				String jwt = Jwts.builder()
 						  .setSubject("users/TzMUocMF4p")
-						  .claim("name", userName)
+						  .claim("name", username)
 						  .claim("scope", "this is my custom Secret key for authnetication")
 						  .signWith(
 						    SignatureAlgorithm.HS256,
@@ -107,9 +114,13 @@ public class Login extends AbstractAutowiredHttpServlet {
 						  )
 						  .compact();
 				System.out.println(jwt);
-				UserAccount account = new UserAccount(userName);
+				/*UserAccount account = new UserAccount(username);
 				JSONArray array = account.checkMachineList();
-				JSONObject user = account.getProfile();
+				JSONObject user = account.getProfile();*/
+				
+				JSONArray array = washMachineService.listAllMachinesInJSONArray();
+				JSONObject user = userService.getUserByUsernameInJSON(username);
+				
 				obj.put("status", "OK").put("user_info" , user).put("machine_list" , array).put("Authorization", jwt);
 System.out.println("OBJECT: " + obj);
 			} else {

@@ -46,9 +46,9 @@ public class MySQLTableCreation {
 			// Step 3 Create new tables
 //			User, Manager, Site, WashMachine, ReportDefect, Manage 
 			
-			sql = "CREATE TABLE user (" + "UserId INT(7) NOT NULL auto_increment," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance DECIMAL(10,2),"
+			sql = "CREATE TABLE user (" + "id INT(7) NOT NULL auto_increment," + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL," + "balance DECIMAL(10,2),"
 					+ "phoneNumber DECIMAL(11, 0)," + "bonusPoints INT(8)," + "email VARCHAR(255),"
-					+ "PRIMARY KEY (UserId)" + ")";
+					+ "PRIMARY KEY (id)" + ")";
 			statement.executeUpdate(sql);
 
 			sql = "CREATE TABLE manager (" + "EmployeeAccountNumber INT(8) NOT NULL," + "password VARCHAR(255) NOT NULL,"
@@ -97,8 +97,12 @@ public class MySQLTableCreation {
 					+ ")";
 			statement.executeUpdate(sql);
 			
-			// Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
-			sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('John', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+			// Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050  password -> 3229c1097c00d497a0fd282d586be050
+			sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('Dummy_User', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+            statement.executeUpdate(sql);
+            sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('smith', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
+            statement.executeUpdate(sql);
+            sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('John', '3229c1097c00d497a0fd282d586be050', '100', '1112223344', '20','hello@yahoo.com')";
 			statement.executeUpdate(sql);
 			sql = "INSERT INTO user(username, password, balance, phoneNumber, bonusPoints, email) VALUES('Pitt', '3229c1097c00d497a0fd282d586be050', '250', '2221114567', '20','hello@yahoo.com')";
 			statement.executeUpdate(sql);

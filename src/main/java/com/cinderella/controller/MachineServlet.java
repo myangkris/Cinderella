@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cinderella.entity.WashMachine;
+import com.cinderella.entity.Machine;
 import com.cinderella.service.machine.WashMachineService;
 import com.cinderella.utils.WebPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Component
 @WebServlet("/allWashMachines")
-public class WashMachineServlet extends AbstractAutowiredHttpServlet {
+public class MachineServlet extends AbstractAutowiredHttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
@@ -36,7 +36,7 @@ public class WashMachineServlet extends AbstractAutowiredHttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WashMachineServlet() {
+    public MachineServlet() {
         super();
     }
 
@@ -48,9 +48,9 @@ public class WashMachineServlet extends AbstractAutowiredHttpServlet {
 	    response.setContentType("application/json");
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         response.setHeader("Access-Control-Allow-Credential", "true");
-	    List<WashMachine> machines = washMachineService.listAllMachines();
+	    List<Machine> machines = washMachineService.listAllMachines();
 		JSONArray array = new JSONArray();
-		for (WashMachine machine : machines) {
+		for (Machine machine : machines) {
             String jsonString = objectMapper.writeValueAsString(machine);
             JSONObject object = new JSONObject(jsonString);
             array.put(object);

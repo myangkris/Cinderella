@@ -202,13 +202,13 @@ public class connectionTest {
 		
 		// Test 5
 		User.UserBuilder userBuilder = new User.UserBuilder();
-		userBuilder.setUserId(9999);
-		userBuilder.setUserName("Unnamed");
-		userBuilder.setUserPassword("123456");
-		userBuilder.setUserBalance(998.1);
-		userBuilder.setUserPhoneNumber(987654321);
-		userBuilder.setUserBonusPoints(23);
-		userBuilder.setUserEmail("unnamed@laioffer.com");
+		userBuilder.setId(9999);
+		userBuilder.setUsername("Unnamed");
+		userBuilder.setPassword("123456");
+		userBuilder.setBalance(998.1);
+		userBuilder.setPhoneNumber("987654321");
+		userBuilder.setBonusPoints(23);
+		userBuilder.setEmail("unnamed@laioffer.com");
 		user = userBuilder.build();
 		boolean success = connection.addUser(user);
 		if (success) {

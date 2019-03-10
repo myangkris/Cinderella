@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cinderella.dao.DBConnection;
 import com.cinderella.dao.DBConnectionFactory;
 import com.cinderella.entity.User;
-import com.cinderella.entity.WashMachine;
+import com.cinderella.entity.Machine;
 import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.service.account.Transaction;
 
@@ -52,13 +52,13 @@ public class UserAccount extends Account implements Transaction{
 		// TODO Auto-generated method stub
 		if (user.getBalance() >= 2) {
 			UserBuilder builder = new UserBuilder();
-			builder.setUserId(user.getId());
-			builder.setUserName(user.getName());
-			builder.setUserPassword(user.getPassword());
-			builder.setUserBalance(user.getBalance() - 2);
-			builder.setUserPhoneNumber(user.getPhoneNumber());
-			builder.setUserBonusPoints(user.getBonusPoints());
-			builder.setUserEmail(user.getEmail());
+			builder.setId(user.getId());
+			builder.setUsername(user.getUsername());
+			builder.setPassword(user.getPassword());
+			builder.setBalance(user.getBalance() - 2);
+			builder.setPhoneNumber(user.getPhoneNumber());
+			builder.setBonusPoints(user.getBonusPoints());
+			builder.setEmail(user.getEmail());
 			return connection.updateUser(builder.build());
 		}
 		return false;
@@ -74,13 +74,13 @@ public class UserAccount extends Account implements Transaction{
 	public boolean refill(int money) {
 		// TODO Auto-generated method stub
 		UserBuilder builder = new UserBuilder();
-		builder.setUserId(user.getId());
-		builder.setUserName(user.getName());
-		builder.setUserPassword(user.getPassword());
-		builder.setUserBalance(user.getBalance() + money);
-		builder.setUserPhoneNumber(user.getPhoneNumber());
-		builder.setUserBonusPoints(user.getBonusPoints());
-		builder.setUserEmail(user.getEmail());
+		builder.setId(user.getId());
+		builder.setUsername(user.getUsername());
+		builder.setPassword(user.getPassword());
+		builder.setBalance(user.getBalance() + money);
+		builder.setPhoneNumber(user.getPhoneNumber());
+		builder.setBonusPoints(user.getBonusPoints());
+		builder.setEmail(user.getEmail());
 		return connection.updateUser(builder.build());
 	}
 
@@ -88,13 +88,13 @@ public class UserAccount extends Account implements Transaction{
 	public boolean updateProfile(User updateUser) {
 		// TODO Auto-generated method stub
 		UserBuilder builder = new UserBuilder();
-		builder.setUserId(user.getId());
-		builder.setUserName(user.getName());
-		builder.setUserPassword(updateUser.getPassword() == null ? user.getPassword() : updateUser.getPassword());
-		builder.setUserBalance(user.getBalance());
-		builder.setUserPhoneNumber(updateUser.getPhoneNumber() == 0 ? user.getPhoneNumber() : updateUser.getPhoneNumber());
-		builder.setUserBonusPoints(user.getBonusPoints());
-		builder.setUserEmail(updateUser.getEmail() == null ? user.getEmail() : updateUser.getEmail());
+		builder.setId(user.getId());
+		builder.setUsername(user.getUsername());
+		builder.setPassword(updateUser.getPassword() == null ? user.getPassword() : updateUser.getPassword());
+		builder.setBalance(user.getBalance());
+		builder.setPhoneNumber(updateUser.getPhoneNumber() == null ? user.getPhoneNumber() : updateUser.getPhoneNumber());
+		builder.setBonusPoints(user.getBonusPoints());
+		builder.setEmail(updateUser.getEmail() == null ? user.getEmail() : updateUser.getEmail());
 		return connection.updateUser(builder.build());
 	}
 
@@ -104,7 +104,7 @@ public class UserAccount extends Account implements Transaction{
 		JSONObject obj = new JSONObject();
 					try {
 					    obj.put("userId", user.getId());
-						obj.put("name", user.getName());
+						obj.put("name", user.getUsername());
 						obj.put("balance", user.getBalance());
 						obj.put("phoneNumber", user.getPhoneNumber());
 						obj.put("bonusPoints", user.getBonusPoints());
@@ -116,13 +116,13 @@ public class UserAccount extends Account implements Transaction{
 	}
 	
 	public JSONArray checkMachineList() throws Exception {
-		List<WashMachine> list =  connection.getWashMachineList(address);
+		List<Machine> list =  connection.getWashMachineList(address);
 		return toJSONArray(list);
 	}
 	
-	private JSONArray toJSONArray(List<WashMachine> list) {
+	private JSONArray toJSONArray(List<Machine> list) {
 		JSONArray array = new JSONArray();
-		for(WashMachine washmachine : list) {
+		for(Machine washmachine : list) {
 			JSONObject obj = new JSONObject();
 			Float price = washmachine.getPricePerService();
 //`MachineID`, `status`, `pricePerService`, `UsedBy`, `locatedAt`, `WaitedBy`, `startsAt`, `waitingCapacity`

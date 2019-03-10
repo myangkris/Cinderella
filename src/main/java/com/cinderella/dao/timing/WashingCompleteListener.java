@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cinderella.dto.WashingInfo.WashingInfoBuilder;
 import com.cinderella.entity.User;
-import com.cinderella.entity.WashMachine;
+import com.cinderella.entity.Machine;
 import com.cinderella.service.machine.WashMachineService;
 import com.cinderella.service.remiding.WashCompleteRemindingService;
 
@@ -36,7 +36,7 @@ public class WashingCompleteListener implements MessageListener {
 			       .withMachineId(machineId)
 			       .withWashingDuration(time);
 			
-			washMachineService.updateWashMachineStatus(builder.build(), WashMachine.STATUS_AVAILABLE);
+			washMachineService.updateWashMachineStatus(builder.build(), Machine.STATUS_AVAILABLE);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

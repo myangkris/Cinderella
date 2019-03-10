@@ -17,6 +17,7 @@ import com.cinderella.dto.WashingInfo;
 import com.cinderella.dto.WashingInfo.WashingInfoBuilder;
 import com.cinderella.entity.User;
 import com.cinderella.service.timing.WashingService;
+import com.cinderella.service.user.UserService;
 
 /**
  * Servlet implementation class WashingController
@@ -30,7 +31,7 @@ public class WashingServlet extends AbstractAutowiredHttpServlet {
     private WashingService washingService;
     
     @Autowired
-    private DBConnection connection;
+    private UserService userService;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -58,11 +59,13 @@ public class WashingServlet extends AbstractAutowiredHttpServlet {
         String machineId = input.getInt("machineId") + "";
         long washingDuration = input.getInt("washingDuration");
         
-        User user = connection.findUserByUserId(Integer.parseInt(userId));
+        User user = userService.getUserById(Integer.parseInt(userId));
+        System.out.println("User ID: " + userId);
+        System.out.println("user: " + user);
         
         WashingInfoBuilder builder = new WashingInfoBuilder();
         builder.withUserId(userId)
-               .withUsername(user.getName())
+               .withUsername(user.getUsername())
                .withMachineId(machineId)
                .withWashingDuration(washingDuration);
         WashingInfo washingInfo = builder.build();
