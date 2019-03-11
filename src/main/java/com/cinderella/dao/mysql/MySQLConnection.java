@@ -18,7 +18,7 @@ import com.cinderella.entity.Site.SiteBuilder;
 import com.cinderella.entity.User;
 import com.cinderella.entity.User.UserBuilder;
 import com.cinderella.entity.Machine;
-import com.cinderella.entity.Machine.WashMachineBuilder;;
+import com.cinderella.entity.Machine.MachineBuilder;;
 
 @Repository
 public class MySQLConnection implements DBConnection {
@@ -208,7 +208,7 @@ public class MySQLConnection implements DBConnection {
 				ps.setLong(1, machineId);
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
-					WashMachineBuilder builder = new WashMachineBuilder();
+					MachineBuilder builder = new MachineBuilder();
 					builder.setId(rs.getLong("MachineId"));
 					builder.setStatus(rs.getInt("status"));
 					builder.setPricePerService(rs.getFloat("pricePerService"));
@@ -359,7 +359,7 @@ public class MySQLConnection implements DBConnection {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setLong(1, washMachine.getId());
 			ps.setInt(2, washMachine.getStatus());
-			ps.setFloat(3, washMachine.getPricePerService());
+			ps.setDouble(3, washMachine.getPricePerService());
 			ps.setInt(4, washMachine.getUsedBy());
 			if (washMachine.getLocation() != null) {
 				ps.setString(5, washMachine.getLocation());
@@ -407,7 +407,7 @@ public class MySQLConnection implements DBConnection {
 					+ "WHERE MachineId = ? ";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, washMachine.getStatus());
-			ps.setFloat(2, washMachine.getPricePerService());
+			ps.setDouble(2, washMachine.getPricePerService());
 			ps.setInt(3, washMachine.getUsedBy());
 			if (washMachine.getLocation() != null) {
 				ps.setString(4, washMachine.getLocation());
@@ -687,7 +687,7 @@ public class MySQLConnection implements DBConnection {
 			ps.setString(1, address);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				WashMachineBuilder builder = new WashMachineBuilder();
+				MachineBuilder builder = new MachineBuilder();
 				builder.setId(rs.getLong("MachineId"));
 				builder.setStatus(rs.getInt("status"));
 				builder.setPricePerService(rs.getFloat("pricePerService"));

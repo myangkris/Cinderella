@@ -15,39 +15,32 @@ public class MachineTableInitializer {
         statement.executeUpdate(sql);
         
         sql = "CREATE TABLE machines (" 
-                + "MachineID INT(13) NOT NULL," 
+                + "id INT(13) NOT NULL auto_increment," 
                 + "status INT(255) NOT NULL,"
                 + "pricePerService FLOAT(4,2),"
-                + "UsedBy INT(7),"
+                + "usedBy INT(8),"
                 + "locatedAt VARCHAR(255),"
-                + "WaitedBy INT(7),"
+                + "waitedBy INT(8),"
                 + "startsAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
-                + "waitingCapacity INT(2),"
-                + "PRIMARY KEY (MachineID)," 
-                + "FOREIGN KEY (UsedBy) REFERENCES users(id),"
+                + "waitingCapacity INT(3),"
+                + "PRIMARY KEY (id)," 
+                + "FOREIGN KEY (usedBy) REFERENCES users(id),"
                 + "FOREIGN KEY (locatedAt) REFERENCES site(Address)," 
-                + "FOREIGN KEY (WaitedBy) REFERENCES user(UserId)" 
+                + "FOREIGN KEY (waitedBy) REFERENCES users(id)" 
                 + ")";
         statement.executeUpdate(sql);
         
         // password -> 3229c1097c00d497a0fd282d586be050
-        sql = "INSERT INTO users(username, password, balance, phoneNumber, bonusPoints, email) VALUES('Dummy_User', 'password', '100', '1112223344', '20','hello@yahoo.com')";
-        statement.executeUpdate(sql);
-        sql = "INSERT INTO users(username, password, balance, phoneNumber, bonusPoints, email) VALUES('smith', 'password', '100', '1112223344', '20','hello@yahoo.com')";
-        statement.executeUpdate(sql);
-        sql = "INSERT INTO users(username, password, balance, phoneNumber, bonusPoints, email) VALUES('John', 'password', '100', '1112223344', '20','hello@yahoo.com')";
-        statement.executeUpdate(sql);
-        sql = "INSERT INTO users(username, password, balance, phoneNumber, bonusPoints, email) VALUES('Pitt', 'password', '250', '2221114567', '20','hello@yahoo.com')";
-        statement.executeUpdate(sql);
-        sql = "INSERT INTO users(username, password, balance, phoneNumber, bonusPoints, email) VALUES('Doug', 'password', '12', '3331117895', '20','hello@yahoo.com')";
-        statement.executeUpdate(sql);
-        sql = "INSERT INTO users(username, password, balance, phoneNumber, bonusPoints, email) VALUES('John Doe', 'password', '100', '1597539875', '20','hello@yahoo.com')";
-        statement.executeUpdate(sql);
+        for (int i = 0; i < 16; i++) {
+            sql = "INSERT INTO machines (status, pricePerService, usedBy, locatedAt, waitedBy, waitingCapacity) "
+                    + "VALUES(0, 2.00, 1, '1234 Center Dr', 1, 1)";
+            statement.executeUpdate(sql);
+        }
         
         statement.close();
         conn.close();
         
-        System.out.println("User table initialized!");
+        System.out.println("Machines table initialized!");
     }
 
 }

@@ -63,7 +63,7 @@ public class WashMachineServiceImpl implements WashMachineService {
         JSONArray array = new JSONArray();
         for(Machine machine : list) {
             JSONObject obj = new JSONObject();
-            Float price = machine.getPricePerService();
+            Double price = machine.getPricePerService();
 //`MachineID`, `status`, `pricePerService`, `UsedBy`, `locatedAt`, `WaitedBy`, `startsAt`, `waitingCapacity`
             try {
                 obj.put("MachineID", machine.getId());

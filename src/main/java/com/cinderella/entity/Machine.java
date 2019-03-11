@@ -14,7 +14,7 @@ public class Machine {
     @JsonProperty
 	private int status;
     @JsonProperty
-	private float pricePerService;
+	private double pricePerService;
     @JsonProperty
 	private int usedBy;
     @JsonProperty
@@ -27,7 +27,7 @@ public class Machine {
 	private int waitingCapacity;
 	
 	// Constructor------------------------------------------------
-	private Machine(WashMachineBuilder builder) {
+	private Machine(MachineBuilder builder) {
 		this.id = builder.id;
 		this.status = builder.status;
 		this.pricePerService = builder.pricePerService;
@@ -46,7 +46,7 @@ public class Machine {
 		return status;
 	}
 	
-	public float getPricePerService() {
+	public double getPricePerService() {
 		return pricePerService;
 	}
 	
@@ -76,7 +76,7 @@ public class Machine {
 		return this;
 	}
 
-	public Machine setPricePerService(float pricePerService) {
+	public Machine setPricePerService(double pricePerService) {
 		this.pricePerService = pricePerService;
 		return this;
 	}
@@ -107,11 +107,11 @@ public class Machine {
 	}
 	
 	// Builder
-	public static class WashMachineBuilder{
+	public static class MachineBuilder{
 		// Fields
 		private long id;
 		private int status;
-		private float pricePerService;
+		private double pricePerService;
 		private int usedBy;
 		private String location;
 		private int waitedBy;
@@ -123,35 +123,35 @@ public class Machine {
 		}
 		
 		// Builder's Setters
-		public WashMachineBuilder setId(long id) {
+		public MachineBuilder setId(long id) {
 			this.id = id;
 			return this;
 		}
-		public WashMachineBuilder setStatus(int status) {
+		public MachineBuilder setStatus(int status) {
 			this.status = status;
 			return this;
 		}
-		public WashMachineBuilder setPricePerService(float pricePerService) {
+		public MachineBuilder setPricePerService(double pricePerService) {
 			this.pricePerService = pricePerService;
 			return this;
 		}
-		public WashMachineBuilder setUsedBy(int usedBy) {
+		public MachineBuilder setUsedBy(int usedBy) {
 			this.usedBy = usedBy;
 			return this;
 		}
-		public WashMachineBuilder setLocation(String location) {
+		public MachineBuilder setLocation(String location) {
 			this.location = location;
 			return this;
 		}
-		public WashMachineBuilder setWaitedBy(int waitedBy) {
+		public MachineBuilder setWaitedBy(int waitedBy) {
 			this.waitedBy = waitedBy;
 			return this;
 		}
-		public WashMachineBuilder setStartsAt(Timestamp startsAt) {
+		public MachineBuilder setStartsAt(Timestamp startsAt) {
 			this.startsAt = startsAt;
 			return this;
 		}
-		public WashMachineBuilder setWaitingCapacity(int waitingCapacity) {
+		public MachineBuilder setWaitingCapacity(int waitingCapacity) {
 			this.waitingCapacity = waitingCapacity;
 			return this;
 		}

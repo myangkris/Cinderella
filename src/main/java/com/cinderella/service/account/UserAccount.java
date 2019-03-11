@@ -124,7 +124,7 @@ public class UserAccount extends Account implements Transaction{
 		JSONArray array = new JSONArray();
 		for(Machine washmachine : list) {
 			JSONObject obj = new JSONObject();
-			Float price = washmachine.getPricePerService();
+			Double price = washmachine.getPricePerService();
 //`MachineID`, `status`, `pricePerService`, `UsedBy`, `locatedAt`, `WaitedBy`, `startsAt`, `waitingCapacity`
 			try {
 				obj.put("MachineID", washmachine.getId());
