@@ -10,7 +10,7 @@ public class Machine {
     public static final int STATUS_ERROR = 2;
 	// Fields------------------------------------------------
     @JsonProperty
-	private final long id;
+	private final int id;
     @JsonProperty
 	private int status;
     @JsonProperty
@@ -39,7 +39,7 @@ public class Machine {
 	}
 
 	// Getters------------------------------------------------
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 	public int getStatus() {
@@ -109,7 +109,7 @@ public class Machine {
 	// Builder
 	public static class MachineBuilder{
 		// Fields
-		private long id;
+		private int id;
 		private int status;
 		private double pricePerService;
 		private int usedBy;
@@ -123,7 +123,7 @@ public class Machine {
 		}
 		
 		// Builder's Setters
-		public MachineBuilder setId(long id) {
+		public MachineBuilder setId(int id) {
 			this.id = id;
 			return this;
 		}

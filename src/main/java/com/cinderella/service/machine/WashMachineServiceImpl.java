@@ -25,7 +25,7 @@ import com.cinderella.entity.Machine;
 @Service
 public class WashMachineServiceImpl implements WashMachineService {
     private static final String DEFAULT_ADDRESS = "1234 Center Dr";
-    @Autowired
+    /*@Autowired
     private MySQLConnection connection;
     
     @Override
@@ -37,24 +37,24 @@ public class WashMachineServiceImpl implements WashMachineService {
             washMachine.setStartsAt(Timestamp.valueOf(LocalDateTime.now(ZoneOffset.of("-16"))));
         }
         connection.updateWashMachine(washMachine);
-    }
-    /*@Autowired
+    }*/
+    @Autowired
     private MachineDao machineDao;
     
     @Override
     public void updateWashMachineStatus(WashingInfo washingInfo, int status) {
-        Machine washMachine = machineDao.findWashMachineById(Long.parseLong(washingInfo.getMachineId()));
+        Machine washMachine = machineDao.getMachineById(Integer.parseInt(washingInfo.getMachineId()));
         washMachine.setStatus(status);
         washMachine.setUsedBy(Integer.parseInt(washingInfo.getUserId()));
         if (Machine.STATUS_WASHING == status) {
             washMachine.setStartsAt(Timestamp.valueOf(LocalDateTime.now(ZoneOffset.of("-16"))));
         }
-        connection.updateWashMachine(washMachine);
-    }*/
+        machineDao.update(washMachine);
+    }
 
     @Override
     public List<Machine> listAllMachines() {
-        return connection.getWashMachineList(DEFAULT_ADDRESS);
+        return machineDao.getMachineListByLocation(DEFAULT_ADDRESS);
     }
     
     @Override

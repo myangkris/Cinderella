@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cinderella.dao.timing.WashingMessageProducer;
 import com.cinderella.dto.WashingInfo;
 import com.cinderella.entity.Machine;
-import com.cinderella.service.account.UserAccount;
 import com.cinderella.service.machine.WashMachineService;
 import com.cinderella.service.user.UserService;
 
@@ -25,13 +24,11 @@ public class WashingServiceImpl implements WashingService {
     
     
     @Override
+    @Transactional
     public void process(WashingInfo washingInfo) {
         washingMessageProducer.produce(washingInfo);
         System.out.println("Update machine");
         washMachineService.updateWashMachineStatus(washingInfo, Machine.STATUS_WASHING);
-        /*UserAccount userAccout = new UserAccount(washingInfo.getUsername());
-        userAccout.pay();*/
-        System.out.println("Update user");
         userService.updateBalanceById(Integer.parseInt(washingInfo.getUserId()), -2.00);
     }
 }

@@ -209,7 +209,7 @@ public class MySQLConnection implements DBConnection {
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					MachineBuilder builder = new MachineBuilder();
-					builder.setId(rs.getLong("MachineId"));
+					builder.setId(rs.getInt("MachineId"));
 					builder.setStatus(rs.getInt("status"));
 					builder.setPricePerService(rs.getFloat("pricePerService"));
 					builder.setUsedBy(rs.getInt("UsedBy"));
@@ -688,7 +688,7 @@ public class MySQLConnection implements DBConnection {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				MachineBuilder builder = new MachineBuilder();
-				builder.setId(rs.getLong("MachineId"));
+				builder.setId(rs.getInt("MachineId"));
 				builder.setStatus(rs.getInt("status"));
 				builder.setPricePerService(rs.getFloat("pricePerService"));
 				builder.setUsedBy(rs.getInt("UsedBy"));

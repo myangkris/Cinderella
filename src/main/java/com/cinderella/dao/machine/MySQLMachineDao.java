@@ -9,10 +9,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.cinderella.dao.mysql.MySQLDBUtil;
 import com.cinderella.entity.Machine;
 import com.cinderella.entity.Machine.MachineBuilder;
 
+@Repository
 public class MySQLMachineDao implements MachineDao {
 
     static {
@@ -40,7 +43,8 @@ public class MySQLMachineDao implements MachineDao {
                    int waitingCapacity = rs.getInt("waitingCapacity");
                    
                    MachineBuilder builder = new MachineBuilder();
-                   builder.setStatus(status)
+                   builder.setId(id)
+                          .setStatus(status)
                           .setPricePerService(pricePerService)
                           .setUsedBy(usedBy)
                           .setLocation(locatedAt)
@@ -100,6 +104,7 @@ public class MySQLMachineDao implements MachineDao {
         
         try (Connection connection = DriverManager.getConnection(MySQLDBUtil.URL);
              PreparedStatement ps = connection.prepareStatement(sql)) {
+            System.out.println("Update status to : " + machine.getStatus());
             ps.setInt(1, machine.getStatus());
             ps.setDouble(2, machine.getPricePerService());
             ps.setInt(3, machine.getUsedBy());
@@ -111,7 +116,9 @@ public class MySQLMachineDao implements MachineDao {
             ps.setInt(5, machine.getWaitedBy());
             ps.setTimestamp(6, machine.getStartsAt());
             ps.setInt(7, machine.getWaitingCapacity());
-            ps.setLong(8, machine.getId());
+            System.out.println("Machine ID: " + machine.getId());
+            ps.setInt(8, machine.getId());
+            
 
             ps.executeUpdate();
         } catch (SQLException e) {
