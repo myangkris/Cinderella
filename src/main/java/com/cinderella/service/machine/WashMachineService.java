@@ -11,4 +11,5 @@ public interface WashMachineService {
     void updateWashMachineStatus(WashingInfo washingInfo, int status);
     List<Machine> listAllMachines();
     JSONArray listAllMachinesInJSONArray();
+    Machine getMachineById(int id);
 }

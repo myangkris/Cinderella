@@ -27,8 +27,9 @@ public class WashingServiceImpl implements WashingService {
     @Transactional
     public void process(WashingInfo washingInfo) {
         washingMessageProducer.produce(washingInfo);
-        System.out.println("Update machine");
         washMachineService.updateWashMachineStatus(washingInfo, Machine.STATUS_WASHING);
-        userService.updateBalanceById(Integer.parseInt(washingInfo.getUserId()), -2.00);
+        Machine machine = washMachineService.getMachineById(Integer.parseInt(washingInfo.getMachineId()));
+        Double cost = machine.getPricePerService();
+        userService.updateBalanceById(Integer.parseInt(washingInfo.getUserId()), -cost);
     }
 }

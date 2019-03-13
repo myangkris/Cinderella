@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinderella.dao.machine.MachineDao;
-import com.cinderella.dao.mysql.MySQLConnection;
 import com.cinderella.dao.mysql.MySQLDBUtil;
 import com.cinderella.dto.WashingInfo;
 import com.cinderella.entity.Machine;
@@ -80,6 +79,11 @@ public class WashMachineServiceImpl implements WashMachineService {
             }
         }
         return array;
+    }
+    
+    @Override
+    public Machine getMachineById(int id) {
+        return machineDao.getMachineById(id);
     }
     
     public static void main(String[] args) throws Exception {
