@@ -26,6 +26,9 @@ class ConfirmText extends Component {
             .catch((error) => {
                 console.log(error, "catch the hoop")
             })
+        localStorage.setItem('startTime', Date.parse(new Date()) / 1000)
+        localStorage.setItem('endTime', Date.parse(new Date()) / 1000 + 51)
+
     }
     render() {
 

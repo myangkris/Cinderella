@@ -17,13 +17,17 @@ export class MachineStatus extends React.Component {
     getMachineStatus = () => {
         if (this.props.machineStatus === 0) {
             return <Popover placement="top"
-                            content={<Link to="/confirm"><Button style={popover}
-                                                onClick={this.props.reserve}
-                                             value={this.props.machineId}>
-                                Machine No.{this.props.machineId}
-                                <br/>
-                                Reserve me!
-                            </Button></Link>} arrowPointAtCenter>
+                            content={
+                                <Link to="/confirm">
+                                    <Button style={popover}
+                                            onClick={this.props.reserve}
+                                            value={this.props.machineId}
+                                    >
+                                        Machine No.{this.props.machineId}
+                                        <br/>
+                                        Reserve me!
+                                    </Button>
+                                </Link>} arrowPointAtCenter>
                 <img src={Available} alt=""/>
             </Popover>
         } else if (this.props.machineStatus === 1) {
