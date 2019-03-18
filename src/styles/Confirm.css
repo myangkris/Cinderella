@@ -59,3 +59,11 @@
     font-weight: bold;
     padding: 1rem 0;
 }
+
+.confirm-text p{
+    padding: 1rem 0;
+}
+
+.Countdown span{
+    font-size: 3rem;
+}

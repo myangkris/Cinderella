@@ -37,32 +37,6 @@ export class MachineStatus extends React.Component {
         }
     }
 
-
-
-
-
-
-    // fetchData = () => {
-    //     fetch(`http://localhost:8080/Cinderella/washing`, {
-    //         method: "POST",
-    //         dataType: "JSON",
-    //         body: JSON.stringify({
-    //             washingDuration: 50000,
-    //             userId: 1,
-    //             machineId: this.props.machineID,
-    //         }),
-    //     })
-    //         .then((resp) => {
-    //             return resp.json()
-    //         })
-    //         .then((data) => {
-    //             this.setState({ suggestion: data.suggestion })
-    //         })
-    //         .catch((error) => {
-    //             console.log(error, "catch the hoop")
-    //         })
-    // }
-
     render() {
 
         return(
